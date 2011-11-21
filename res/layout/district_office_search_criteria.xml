@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <Button android:id="@+id/district_office_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    
+    <TextView android:id="@+id/district_office_finder_search_type_label"
+        android:text="Search Type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        />
+    
+    <Spinner android:id="@+id/district_office_finder_search_type"
+        android:entries="@array/district_office_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/district_office_finder_search_type_label"
+        />
+        
+    <TextView android:id="@+id/district_office_search_type_label"
+        android:text="Retrieve Office for Zip Code"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/district_office_finder_search_type"
+        />
+    
+    <EditText android:id="@+id/district_office_zipcode_field"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:layout_below="@id/district_office_search_type_label"
+        />
+    
+    <Spinner android:id="@+id/district_office_finder_state_spinner"
+        android:entries="@array/states"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/district_office_zipcode_field"
+        />
+    
+</RelativeLayout>

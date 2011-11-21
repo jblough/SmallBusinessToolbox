@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/hello"
+    />
+<Button android:id="@+id/test_licenses_and_permits_button"
+    android:text="Licenses and Permits"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_loans_and_grants_button"
+    android:text="Loans and Grants"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_recommended_sites_button"
+    android:text="Recommended Sites"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_web_data_button"
+    android:text="City and County Web Data"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+    
+<Button android:id="@+id/test_program_finder_button"
+    android:text="Small Business Program Finder"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:layout_marginTop="10px"
+    />
+<Button android:id="@+id/test_solicitations_button"
+    android:text="Solicitations"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_awards_button"
+    android:text="Awards"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_green_button"
+    android:text="Green"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_generic_search_button"
+    android:text="Generic Search"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+<Button android:id="@+id/test_district_offices_button"
+    android:text="SBA District Offices"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    />
+    
+</LinearLayout>

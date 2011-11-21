@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    
+    <TextView android:id="@+id/filter_options_label"
+        android:text="Filter Options:" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+        
+    <Spinner android:id="@+id/recommended_sites_options"
+        android:entries="@array/recommended_sites_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filter_options_label"
+        />
+
+    <TextView android:id="@+id/recommended_sites_search_label"
+        android:text="Keyword" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recommended_sites_options"
+        />
+        
+    <EditText android:id="@+id/recommended_sites_search_term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/recommended_sites_search_label"
+        />
+        
+    <Spinner android:id="@+id/recommended_sites_category"
+        android:visibility="gone"
+        android:entries="@array/recommended_sites_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recommended_sites_search_term"
+        />
+        
+    <Button android:id="@+id/recommended_sites_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</RelativeLayout>

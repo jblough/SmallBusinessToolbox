@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    
+    <!-- Include Federal results checkbox -->
+    <CheckBox android:id="@+id/loans_and_grants_include_federal_checkbox"
+        android:text="Include Federal Results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    
+    <!-- Filter on state checkbox -->
+    <CheckBox android:id="@+id/loans_and_grants_state_filter_checkbox"
+        android:text="Include State Results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loans_and_grants_include_federal_checkbox"
+        />
+    
+    <!-- State filter spinner -->
+    <Spinner android:id="@+id/loans_and_grants_state_spinner"
+        android:entries="@array/states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:layout_below="@id/loans_and_grants_state_filter_checkbox"
+        />
+    
+    <!-- Filter on Industry spinner (first option is something like "No Filter") -->
+    <!-- Filter on state checkbox -->
+    <CheckBox android:id="@+id/loans_and_grants_industry_filter_checkbox"
+        android:text="Filter on Industry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loans_and_grants_state_spinner"
+        />
+        
+    <Spinner android:id="@+id/loans_and_grants_industry_spinner"
+        android:entries="@array/loans_and_grants_industries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:layout_below="@id/loans_and_grants_industry_filter_checkbox"
+        />
+    
+    <!-- Filter on Specialty checkbox -->
+    <CheckBox android:id="@+id/loans_and_grants_specialties_checkbox"
+        android:text="Filter on Specialties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loans_and_grants_industry_spinner"
+        />
+    
+    <!-- Filter on Specialty multiselect listview -->
+    <!-- 
+    <ListView android:id="@+id/loans_and_grants_specialties_list"
+        android:entries="@array/loans_and_grants_specialties"
+        android:choiceMode="multipleChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        /> 
+     -->
+     <!-- 
+        General Purpose
+        Development and Existing Business
+        Exporting Good or Services
+        Contractor
+        Green Businesses
+        Assisting Military and Veterans
+        Minority owned
+        Woman owned
+        Disabled owned
+        Located in Rural Areas
+        Businesses Recovering from Disaster
+      -->
+      
+    <Button android:id="@+id/loans_and_grants_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ScrollView android:id="@+id/loans_and_grants_specialties_wrapper"
+        android:layout_below="@id/loans_and_grants_specialties_checkbox"
+        android:layout_above="@id/loans_and_grants_search_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginLeft="10dip">
+        <LinearLayout
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+        <CheckBox android:id="@+id/loans_and_grants_general_purpose_specialty"
+            android:text="General Purpose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_existing_specialty"
+            android:text="Development and Existing Business"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_exporting_specialty"
+            android:text="Exporting Good or Services"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_contractor_specialty"
+            android:text="Contractor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_green_specialty"
+            android:text="Green Businesses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_military_specialty"
+            android:text="Assisting Military and Veterans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_minority_specialty"
+            android:text="Minority owned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_woman_specialty"
+            android:text="Woman owned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_disabled_specialty"
+            android:text="Disabled owned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_rural_specialty"
+            android:text="Located in Rural Areas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox android:id="@+id/loans_and_grants_disaster_specialty"
+            android:text="Businesses Recovering from Disaster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+    </ScrollView>        
+    
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    
+    <TextView android:id="@+id/program_finder_type_label"
+        android:text="Search Type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+     <Spinner android:id="@+id/program_finder_type_spinner"
+        android:entries="@array/program_finder_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/program_finder_type_label"
+        />
+        
+    <TextView android:id="@+id/program_finder_criteria_label"
+        android:text="Search Type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/program_finder_type_spinner"
+        />
+     <Spinner android:id="@+id/program_finder_criteria_spinner"
+        android:entries="@array/program_finder_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/program_finder_criteria_label"
+        />
+        
+    <Button android:id="@+id/program_finder_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+        
+</RelativeLayout>

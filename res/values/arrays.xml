@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="licenses_and_permits_search_by">
+        <item>Category</item>
+        <item>State</item>
+        <item>Business Type</item>
+    </string-array>
+    
+    <string-array name="licenses_and_permits_categories">
+        <item>Tax Registration</item>
+        <item>State Licenses and Permits</item>
+        <item>Business Entity Filing</item>
+        <item>Doing Business As</item>
+        <item>Employer Requirements</item>
+    </string-array>
+
+    <string-array name="licenses_and_permits_business_type_subfilter">
+        <item>No subfilter</item>
+        <item>State</item>
+        <item>County</item>
+        <item>City</item>
+        <item>Zip Code</item>
+    </string-array>
+
+    <string-array name="licenses_and_permits_business_types">
+        <item>General Business Licenses</item>
+        <item>Auto Dealership</item>
+        <item>Barber Shop</item>
+        <item>Beauty Salon</item>
+        <item>Child Care Services</item>
+        <item>Construction Contractor</item>
+        <item>Debt Collection Agency</item>
+        <item>Electrician</item>
+        <item>Massage Therapist</item>
+        <item>Plumber</item>
+        <item>Restaurant</item>
+    </string-array>
+    
+    <string-array name="loans_and_grants_industries">
+        <item>Agriculture</item>
+        <item>Child Care</item>
+        <item>Environmental Management</item>
+        <item>Health Care</item>
+        <item>Manufacturing</item>
+        <item>Technology</item>
+        <item>Tourism</item>
+    </string-array>
+
+    <string-array name="loans_and_grants_specialties">
+        <item>General Purpose</item>
+        <item>Development and Existing Business</item>
+        <item>Exporting Good or Services</item>
+        <item>Contractor</item>
+        <item>Green Businesses</item>
+        <item>Assisting Military and Veterans</item>
+        <item>Minority owned</item>
+        <item>Woman owned</item>
+        <item>Disabled owned</item>
+        <item>Located in Rural Areas</item>
+        <item>Businesses Recovering from Disaster</item>
+    </string-array>
+    
+    <string-array name="recommended_sites_options">
+        <item>All Recommended Sites</item>
+        <item>Search by Keyword</item>
+        <item>Search by Category</item>
+        <item>Search by Master Term</item>
+        <item>Filter by Domain (e.g. sba, irs, ...)</item>
+    </string-array>
+
+    <string-array name="recommended_sites_categories">
+        <item>Managing a Business</item>
+        <item>Financing a Business</item>
+        <item>Registering a Business</item>
+        <item>Starting a Business</item>
+        <item>Business Law</item>
+        <item>Other</item>
+    </string-array>
+        
+    <string-array name="web_data_types">
+        <item>All Website URLs</item>
+        <item>Only Primary Website URLs</item>
+        <item>All Data</item>
+    </string-array>
+    
+    <string-array name="web_data_scopes">
+        <item>All Cities and Counties in a State</item>
+        <item>All Cities in a State</item>
+        <item>All Counties in a State</item>
+        <item>Specific City in the State</item>
+        <item>Specific County in the State</item>
+    </string-array>
+    
+    <string-array name="program_finder_types">
+        <item>Federal</item>
+        <item>Private (Third Party)</item>
+        <item>National (Federal and Private)</item>
+        <item>By State</item>
+        <item>By Industry/Interest</item>
+        <item>By Type of Program/Service</item>
+        <item>By Qualification</item>
+    </string-array>
+    
+    <string-array name="program_finder_industries">
+        <item>Agriculture</item>
+        <item>Child-care</item>
+        <item>Disabled</item>
+        <item>Disaster-recovery</item>
+        <item>Export</item>
+        <item>Environment</item>
+        <item>Health-care</item>
+        <item>Technology</item>
+        <item>Tourism</item>
+        <item>Miscellaneous</item>
+    </string-array>
+    
+    <string-array name="program_finder_service_types">
+        <item>Woman-owned</item>
+        <item>8a</item>
+        <item>Minority</item>
+        <item>Veteran</item>
+    </string-array>
+    
+    <string-array name="program_finder_qualifications">
+        <item>Woman-owned</item>
+        <item>Minority</item>
+        <item>Veteran</item>
+    </string-array>
+    
+    <string-array name="solicitations_filter_options">
+        <item>Show All Solicitations</item>
+        <item>Only Show Open Solicitations</item>
+        <item>Only Show Closed Solicitations</item>
+    </string-array>
+    
+    <string-array name="green_search_types">
+        <item>Grants</item>
+        <item>Solicitations</item>
+        <item>Challenges</item>
+        <item>Research &amp; Development</item>
+        <item>Patents</item>
+        <item>Science &amp; Technology R&amp;D data</item>
+    </string-array>
+    
+    <string-array name="states">
+        <item>Alabama</item>
+        <item>Alaska</item>
+        <item>Arizona</item>
+        <item>Arkansas</item>
+        <item>California</item>
+        <item>Colorado</item>
+        <item>Connecticut</item>
+        <item>Delaware</item>
+        <item>District of Columbia</item>
+        <item>Florida</item>
+        <item>Georgia</item>
+        <item>Guam</item>
+        <item>Hawaii</item>
+        <item>Idaho</item>
+        <item>Illinois</item>
+        <item>Indiana</item>
+        <item>Iowa</item>
+        <item>Kansas</item>
+        <item>Kentucky</item>
+        <item>Louisiana</item>
+        <item>Maine</item>
+        <item>Maryland</item>
+        <item>Massachusetts</item>
+        <item>Michigan</item>
+        <item>Minnesota</item>
+        <item>Mississippi</item>
+        <item>Missouri</item>
+        <item>Montana</item>
+        <item>Nebraska</item>
+        <item>Nevada</item>
+        <item>New Hampshire</item>
+        <item>New Jersey</item>
+        <item>New Mexico</item>
+        <item>New York</item>
+        <item>North Carolina</item>
+        <item>North Dakota</item>
+        <item>Ohio</item>
+        <item>Oklahoma</item>
+        <item>Oregon</item>
+        <item>Pennsylvania</item>
+        <item>Puerto Rico</item>
+        <item>Rhode Island</item>
+        <item>South Carolina</item>
+        <item>South Dakota</item>
+        <item>Tennessee</item>
+        <item>Texas</item>
+        <item>Utah</item>
+        <item>Vermont</item>
+        <item>Virginia</item>
+        <item>Virgin Islands</item>
+        <item>Washington</item>
+        <item>West Virginia</item>
+        <item>Wisconsin</item>
+        <item>Wyoming</item>
+    </string-array>
+    
+    <string-array name="agencies">
+        <item>Dept. of Defense</item>
+        <item>Dept. of Health and Human Services</item>
+        <item>National Aeronautics and Space Administration</item>
+        <item>National Science Foundation</item>
+        <item>Dept. of Energy</item>
+        <item>United States Dept. of Agriculture</item>
+        <item>Environmental Protection Agency</item>
+        <item>Dept. of Commerce</item>
+        <item>Dept. of Education</item>
+        <item>Dept. of Transportation</item>
+        <item>Dept. of Homeland Security</item>
+    </string-array>
+    
+    <string-array name="green_post_agencies">
+        <item>Agency for International Development</item>
+        <item>Architect of the Capitol</item>
+        <item>Broadcasting Board of Governors</item>
+        <item>Defense Contract Management Agency</item>
+        <item>Defense Information Systems Agency</item>
+        <item>Defense Logistics Agency</item>
+        <item>Department of Agriculture</item>
+        <item>Department of Commerce</item>
+        <item>Department of Education</item>
+        <item>Department of Energy</item>
+        <item>Department of Health and Human Services</item>
+        <item>Department of Homeland Security</item>
+        <item>Department of Housing and Urban Development</item>
+        <item>Department of Justice</item>
+        <item>Department of Labor</item>
+        <item>Department of the Air Force</item>
+        <item>Department of the Army</item>
+        <item>Department of the Interior</item>
+        <item>Department of the Navy</item>
+        <item>Department of the Treasury</item>
+        <item>Department of Transportation</item>
+        <item>Department of Veterans Affairs</item>
+        <item>Environmental Protection Agency</item>
+        <item>Federal Communications Commission</item>
+        <item>Federal Energy Regulatory Commission</item>
+        <item>Federal Housing Finance Agency</item>
+        <item>Federal Retirement Thrift Investment Board</item>
+        <item>General Services Administration</item>
+        <item>Government Printing Office</item>
+        <item>International Boundary and Water Commission</item>
+        <item>Library of Congress</item>
+        <item>National Aeronautics and Space Administration</item>
+        <item>National Science Foundation</item>
+        <item>Nuclear Regulatory Commission</item>
+        <item>Office of Personnel Management</item>
+        <item>Office of the Director of National Intelligence</item>
+        <item>Other Defense Agencies</item>
+        <item>Peace Corps</item>
+        <item>Pension Benefit Guaranty Corporation</item>
+        <item>Securities and Exchange Commission</item>
+        <item>Social Security Administration</item>
+        <item>U.S. Department of State</item>
+        <item>United States Postal Service</item>
+        <item>United States Senate</item>
+        <item>United States Trade and Development Agency</item>
+        <item>Washington Metropolitan Area Transit Authority</item>
+    </string-array>
+    
+    <string-array name="item_selection_options">
+        <item>See Details</item>
+        <item>Visit Link</item>
+        <item>Add Bookmark</item>
+    </string-array>
+
+    <string-array name="district_office_options">
+        <item>Find Nearest Ofice</item>
+        <item>By State</item>
+        <item>By Zip Code</item>
+    </string-array>
+</resources>

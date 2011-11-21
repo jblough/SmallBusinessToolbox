@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/program_finder_details_controls"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:background="@color/details_background"
+        android:layout_alignParentBottom="true"
+        >
+    <Button android:id="@+id/program_finder_details_visit_link"
+        android:text="Visit Link"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    <Button android:id="@+id/program_finder_details_add_bookmark"
+        android:text="Add Bookmark"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="34"
+        />
+    <Button android:id="@+id/program_finder_details_dismiss_details"
+        android:text="Dismiss"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    </LinearLayout>
+
+    <TableLayout android:id="@+id/program_finder_details_table"
+        android:stretchColumns="1"
+        android:shrinkColumns="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:visibility="gone"
+        android:background="@color/details_background"
+        android:layout_above="@id/program_finder_details_controls">
+        
+        <TableRow android:id="@+id/program_finder_details_title_row">
+            <TextView
+                android:text="Title:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/program_finder_details_title_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/program_finder_details_description_row">
+            <TextView
+                android:text="Description:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/program_finder_details_description_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/program_finder_details_url_row">
+            <TextView
+                android:text="URL:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/program_finder_details_url_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/program_finder_details_category_row">
+            <TextView
+                android:text="Category:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/program_finder_details_category_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/program_finder_details_state_row">
+            <TextView
+                android:text="State:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/program_finder_details_state_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+
+        <TableRow android:id="@+id/program_finder_details_agency_row">
+            <TextView
+                android:text="Agency:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/program_finder_details_agency_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+
+    </TableLayout>  
+    
+    <ListView android:id="@id/android:list" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/program_finder_details_table"
+        />
+</RelativeLayout>

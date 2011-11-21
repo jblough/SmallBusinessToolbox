@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <CheckBox android:id="@+id/generic_download_all_checkbox"
+        android:text="Download All Data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+        
+    <Button android:id="@+id/generic_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    
+        <LinearLayout android:id="@+id/generic_input_wrapper"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:layout_below="@id/generic_download_all_checkbox"
+        android:layout_above="@id/generic_search_button">
+    
+    <CheckBox android:id="@+id/generic_search_new_checkbox"
+        android:text="Only Display New Data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView android:id="@+id/generic_search_term_label"
+        android:text="Search term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <EditText android:id="@+id/generic_search_term_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/generic_search_term_label"
+        />
+        
+    <CheckBox android:id="@+id/generic_agency_checkbox"
+        android:text="Filter by Agency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/generic_search_term_field"
+        />
+    <Spinner android:id="@+id/generic_agency_spinner"
+        android:entries="@array/green_post_agencies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/generic_agency_checkbox"
+        />
+        
+    <CheckBox android:id="@+id/generic_search_type_checkbox"
+        android:text="Filter by Type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/generic_agency_spinner"
+        />
+    <Spinner android:id="@+id/generic_search_type_spinner"
+        android:entries="@array/green_search_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/generic_search_type_checkbox"
+        />
+        
+        </LinearLayout>
+</RelativeLayout>

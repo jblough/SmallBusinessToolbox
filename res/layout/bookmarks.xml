@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/bookmarks_details_controls"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/details_background"
+        >
+    <Button android:id="@+id/bookmarks_details_visit_link"
+        android:text="Visit Link"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    <Button android:id="@+id/bookmarks_details_remove_bookmark"
+        android:text="Remove Bookmark"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    <Button android:id="@+id/bookmarks_details_dismiss_details"
+        android:text="Dismiss"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    </LinearLayout>
+
+    <TableLayout android:id="@+id/bookmarks_details_table"
+        android:stretchColumns="1"
+        android:shrinkColumns="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:visibility="gone"
+        android:background="@color/details_background"
+        android:layout_above="@id/bookmarks_details_controls">
+        
+        <TableRow android:id="@+id/bookmarks_details_row1">
+            <TextView android:id="@+id/bookmarks_details_label_row1"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row1"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/bookmarks_details_row2"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row2"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row2"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row3"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row3"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row3"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row4"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row4"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row4"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row5"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row5"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row5"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row6"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row6"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row6"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row7"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row7"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row7"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row8"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row8"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row8"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row9"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row9"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row9"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+                    
+        <TableRow android:id="@+id/bookmarks_details_row10"
+            android:visibility="gone">
+            <TextView android:id="@+id/bookmarks_details_label_row10"
+                android:text=""
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/bookmarks_details_value_row10"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:maxLines="7"
+                android:scrollbars="vertical"
+                />
+        </TableRow>
+            
+    </TableLayout>  
+    
+    <ListView android:id="@id/android:list" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/bookmarks_details_table"
+        />
+</RelativeLayout>

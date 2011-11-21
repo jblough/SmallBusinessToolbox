@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <CheckBox android:id="@+id/awards_download_all_checkbox"
+        android:text="Download All Awards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+        
+    <Button android:id="@+id/awards_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    
+    <ScrollView android:id="@+id/awards_input_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/awards_download_all_checkbox"
+        android:layout_above="@id/awards_search_button">
+        
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    
+    <TextView android:id="@+id/awards_search_term_label"
+        android:text="Search term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <EditText android:id="@+id/awards_search_term_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/awards_search_term_label"
+        />
+        
+    <CheckBox android:id="@+id/awards_agency_checkbox"
+        android:text="Filter by Agency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/awards_search_term_field"
+        />
+    <Spinner android:id="@+id/awards_agency_spinner"
+        android:entries="@array/agencies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/awards_agency_checkbox"
+        />
+
+    <CheckBox android:id="@+id/awards_company_checkbox"
+        android:text="Filter by Company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/awards_agency_spinner"
+        />
+    <EditText android:id="@+id/awards_company_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/awards_company_checkbox"
+        />
+
+    <CheckBox android:id="@+id/awards_institution_checkbox"
+        android:text="Filter by Research Institution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/awards_company_field"
+        />
+    <EditText android:id="@+id/awards_institution_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/awards_institution_checkbox"
+        />
+
+    <CheckBox android:id="@+id/awards_year_checkbox"
+        android:text="Filter by Year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/awards_institution_field"
+        />
+    <EditText android:id="@+id/awards_year_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:visibility="gone"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/awards_year_checkbox"
+        />
+        
+        </LinearLayout>
+        
+    </ScrollView>
+</RelativeLayout>

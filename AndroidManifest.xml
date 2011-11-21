@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.josephblough.sbt"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="8" />
+
+    <supports-screens android:smallScreens="true" 
+                      android:normalScreens="true" 
+                      android:largeScreens="true" 
+                      android:anyDensity="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name"
+        android:name=".ApplicationController">
+        <activity android:name=".activities.MainMenuGridActivity"
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.input.LicensesAndPermitsSearchCriteriaActivity"
+                  android:label="Licenses And Permits Search"
+                  android:theme="@android:style/Theme.Light" />
+
+        <activity android:name=".activities.results.LicensesAndPermitsSearchResultsActivity"
+                  android:label="Licenses And Permits Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+
+        <activity android:name=".activities.input.LoansAndGrantsSearchCriteriaActivity"
+                  android:label="Loans and Grants Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.LoansAndGrantsSearchResultsActivity"
+                  android:label="Loans and Grants Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.RecommendedSitesSearchCriteriaActivity"
+                  android:label="Recommended Sites Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.RecommendedSitesSearchResultsActivity"
+                  android:label="Recommended Sites Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.LocalityWebDataCriteriaActivity"
+                  android:label="City/County Web Data Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.LocalityWebDataResultsActivity"
+                  android:label="City/County Web Data Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.ProgramFinderCriteriaActivity"
+                  android:label="Small Business Program Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.ProgramFinderSearchResultsActivity"
+                  android:label="Small Business Program Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.SolicitationsSearchActivity"
+                  android:label="Solicitations Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.SolicitationsSearchResultsActivity"
+                  android:label="Solicitations Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.AwardsSearchActivity"
+                  android:label="Awards Search"
+                  android:windowSoftInputMode="stateHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.AwardsSearchResultsActivity"
+                  android:label="Awards Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.GreenSearchActivity"
+                  android:label="Green Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.GreenSearchResultsActivity"
+                  android:label="Green Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.GenericSearchActivity"
+                  android:label="Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.GenericSearchResultsActivity"
+                  android:label="Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.input.DistrictOfficeSearchActivity"
+                  android:label="SBA District Office Search"
+                  android:theme="@android:style/Theme.Light" />
+                  
+        <activity android:name=".activities.results.DistrictOfficeSearchResultsActivity"
+                  android:label="SBA District Office Search Results"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@android:style/Theme.Light" />
+                                    
+        <activity android:name=".activities.BookmarksActivity"
+                  android:label="Bookmarks"
+                  android:theme="@android:style/Theme.Light" />
+        
+    </application>
+</manifest>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    
+    <TextView android:id="@+id/web_data_type_label"
+        android:text="Local Web Sites to Retrieve:" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+        
+    <Spinner android:id="@+id/web_data_type_spinner"
+        android:entries="@array/web_data_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/web_data_type_label"
+        />
+
+    <TextView android:id="@+id/web_data_state_label"
+        android:text="State" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/web_data_type_spinner"
+        />
+    <Spinner android:id="@+id/web_data_state_spinner"
+        android:entries="@array/states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/web_data_state_label"
+        />
+
+    <TextView android:id="@+id/web_data_scope_label"
+        android:text="Scope of data to retrieve" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/web_data_state_spinner"
+        />
+    <Spinner android:id="@+id/web_data_scope_spinner"
+        android:entries="@array/web_data_scopes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/web_data_scope_label"
+        />
+
+    <TextView android:id="@+id/web_data_locality_label"
+        android:text="County (optional)" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/web_data_scope_spinner"
+        />
+        
+    <EditText android:id="@+id/web_data_locality_term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@+id/web_data_locality_label"
+        />
+
+    <Button android:id="@+id/web_data_search_button"
+        android:text="Retrieve Web Sites"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</RelativeLayout>

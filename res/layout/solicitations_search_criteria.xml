@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    
+    <TextView android:id="@+id/solicitations_search_term_label"
+        android:text="Search term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <EditText android:id="@+id/solicitations_search_term_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/solicitations_search_term_label"
+        />
+        
+    <CheckBox android:id="@+id/solicitations_agency_checkbox"
+        android:text="Filter by Agency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/solicitations_search_term_field"
+        />
+    <Spinner android:id="@+id/solicitations_agency_spinner"
+        android:visibility="gone"
+        android:entries="@array/agencies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/solicitations_agency_checkbox"
+        />
+
+    <TextView android:id="@+id/solicitations_filter_label"
+        android:text="Filter search results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/solicitations_agency_spinner"
+        />
+    <Spinner android:id="@+id/solicitations_filter_spinner"
+        android:entries="@array/solicitations_filter_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/solicitations_filter_label"
+        />
+     
+    <Button android:id="@+id/solicitations_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</RelativeLayout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <TextView android:id="@+id/licenses_and_permits_search_by_label"
+        android:text="Search by:" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <Spinner android:id="@+id/licenses_and_permits_search_by_spinner"
+        android:entries="@array/licenses_and_permits_search_by"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/licenses_and_permits_search_by_label"
+        />
+
+    <!-- Extra fields only visible if the "search by" spinner is set to category -->        
+    <LinearLayout android:id="@+id/licenses_and_permits_category_extra_fields"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/licenses_and_permits_search_by_spinner">
+        
+        <TextView
+            android:text="Category:" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <Spinner android:id="@+id/licenses_and_permits_category_spinner"
+            android:entries="@array/licenses_and_permits_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+    
+    <!-- Extra fields only visible if the "search by" spinner is set to state -->        
+    <LinearLayout android:id="@+id/licenses_and_permits_state_extra_fields"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/licenses_and_permits_category_extra_fields">
+        
+        <TextView
+            android:text="State" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <Spinner android:id="@+id/licenses_and_permits_state_spinner"
+            android:entries="@array/states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+    
+    <!-- Extra fields only visible if the "search by" spinner is set to business type -->        
+    <LinearLayout android:id="@+id/licenses_and_permits_business_type_extra_fields"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/licenses_and_permits_state_extra_fields">
+        
+        <TextView
+            android:text="Business Type:" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <Spinner android:id="@+id/licenses_and_permits_business_types_spinner"
+            android:entries="@array/licenses_and_permits_business_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+            
+        <!-- Remaining options that can be combined with Business Type are State, County, City, and Zip Code -->
+        <TextView
+            android:text="Additional Filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <Spinner android:id="@+id/licenses_and_permits_business_types_subfilter_spinner"
+            android:entries="@array/licenses_and_permits_business_type_subfilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+            
+        <TextView android:id="@+id/licenses_and_permits_business_types_state_label"
+            android:text="State:" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <Spinner android:id="@+id/licenses_and_permits_business_types_state_spinner"
+            android:entries="@array/states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView android:id="@+id/licenses_and_permits_business_types_locality_label"
+            android:text="County" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <EditText android:id="@+id/licenses_and_permits_business_types_locality_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            />
+    </LinearLayout>
+    
+    <Button android:id="@+id/licenses_and_permits_search_button"
+        android:text="Search"
+        android:drawableLeft="@drawable/ic_btn_search"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/district_office_details_controls"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:background="@color/details_background"
+        android:layout_alignParentBottom="true"
+        >
+    <Button android:id="@+id/district_office_details_map_site"
+        android:text="Map Address"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    <Button android:id="@+id/district_office_details_dismiss_details"
+        android:text="Dismiss"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    </LinearLayout>
+
+    <TableLayout android:id="@+id/district_office_details_table"
+        android:stretchColumns="1"
+        android:shrinkColumns="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:visibility="gone"
+        android:background="@color/details_background"
+        android:layout_above="@id/district_office_details_controls">
+        
+        <TableRow android:id="@+id/district_office_details_title_row">
+            <TextView
+                android:text="Title:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/district_office_details_title_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/district_office_details_name_row">
+            <TextView
+                android:text="Name:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/district_office_details_name_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/district_office_details_street1_row">
+            <TextView
+                android:text="Address:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/district_office_details_street1_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/district_office_details_street2_row">
+            <TextView
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/district_office_details_street2_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/district_office_details_location_row">
+            <TextView
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/district_office_details_location_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+
+    </TableLayout>  
+    
+    <ListView android:id="@id/android:list" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/district_office_details_table"
+        />
+</RelativeLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <TableLayout
+        android:stretchColumns="1"
+        android:shrinkColumns="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_title_row">
+            <TextView
+                android:text="Title:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_title_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_description_row">
+            <TextView
+                android:text="Description:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_description_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_url_row">
+            <TextView
+                android:text="URL:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_url_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_location_row">
+            <TextView
+                android:text="Location:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_location_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_category_row">
+            <TextView
+                android:text="Category:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_category_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_business_type_row">
+            <TextView
+                android:text="Business Type:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_business_type_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_section_row">
+            <TextView
+                android:text="Section:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_section_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+        
+        <TableRow android:id="@+id/licenses_and_permits_details_resource_group_description_row">
+            <TextView
+                android:text="Resource Group Description:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:lines="2"
+                />
+            <TextView android:id="@+id/licenses_and_permits_details_resource_group_description_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+    </TableLayout>  
+</LinearLayout>
