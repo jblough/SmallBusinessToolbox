@@ -106,6 +106,23 @@ public class SolicitationsSearchResultsActivity extends ListActivity implements 
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		Solicitation solicitation = ((SolicitationDataAdapter)getListAdapter()).getItem(position);
+		showDetails(solicitation);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(solicitation.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, solicitation.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<Solicitation> results) {

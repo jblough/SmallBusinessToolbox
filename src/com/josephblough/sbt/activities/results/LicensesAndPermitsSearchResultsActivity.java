@@ -20,6 +20,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.AdapterView;
@@ -111,6 +112,23 @@ public class LicensesAndPermitsSearchResultsActivity extends ListActivity implem
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		LicenseAndPermitData licenseAndPermitData = ((LicenseAndPermitDataAdapter)getListAdapter()).getItem(position);
+		showDetails(licenseAndPermitData);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, licenseAndPermitData.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
 
     public void success(LicenseAndPermitDataCollection results) {

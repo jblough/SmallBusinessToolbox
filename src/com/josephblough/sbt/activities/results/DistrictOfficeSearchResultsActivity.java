@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
@@ -88,6 +89,23 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		SbaDistrictOffice office = ((DistrictOfficeDataAdapter)getListAdapter()).getItem(position);
+		showDetails(office);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(office.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, office.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<SbaDistrictOffice> results) {

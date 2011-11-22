@@ -136,4 +136,8 @@ Green Types: (not sure how these map.  example is 'presolicitation')
 	app.bookmarks.removeBookmark(this);
 	app.saveBookmarks();
     }
+    
+    public String formatForSharing() {
+	return url;
+    }
 }

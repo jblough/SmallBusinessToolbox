@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -107,6 +108,23 @@ public class LocalityWebDataResultsActivity extends ListActivity implements Loca
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		LocalityWebData webData = ((LocalityWebDataAdapter)getListAdapter()).getItem(position);
+		showDetails(webData);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(webData.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, webData.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<LocalityWebData> results) {

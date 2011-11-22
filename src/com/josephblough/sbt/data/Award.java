@@ -263,4 +263,8 @@ Award Agencies:
 	app.bookmarks.removeBookmark(this);
 	app.saveBookmarks();
     }
+    
+    public String formatForSharing() {
+	return link;
+    }
 }

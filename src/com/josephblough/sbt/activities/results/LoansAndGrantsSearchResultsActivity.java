@@ -134,6 +134,23 @@ public class LoansAndGrantsSearchResultsActivity extends ListActivity implements
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		LoanAndGrantData loanAndGrantData = ((LoanAndGrantDataAdapter)getListAdapter()).getItem(position);
+		showDetails(loanAndGrantData);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(loanAndGrantData.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, loanAndGrantData.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<LoanAndGrantData> results) {

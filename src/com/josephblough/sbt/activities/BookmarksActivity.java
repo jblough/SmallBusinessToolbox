@@ -162,9 +162,27 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	});
 	
 	getListView().setFastScrollEnabled(true);
-	
+		
 	if (adapter.sections.size() == 0)
 	    Toast.makeText(this, "No bookmarks", Toast.LENGTH_SHORT).show();
+    
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		Bookmarkable bookmark = (Bookmarkable)getListAdapter().getItem(position);
+		showDetails(bookmark);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(bookmark.getName()));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, bookmark.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

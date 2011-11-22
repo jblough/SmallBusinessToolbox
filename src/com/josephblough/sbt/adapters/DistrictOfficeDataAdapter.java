@@ -21,34 +21,8 @@ public class DistrictOfficeDataAdapter extends ArrayAdapter<SbaDistrictOffice> {
 	View row = super.getView(position, convertView, parent);
 	
 	((TextView)row.findViewById(android.R.id.text1)).setText(getItem(position).title);
-	((TextView)row.findViewById(android.R.id.text2)).setText(formatAddress(getItem(position)));
+	((TextView)row.findViewById(android.R.id.text2)).setText(getItem(position).formatForSharing());
 	
 	return row;
-    }
-    
-    private String formatAddress(final SbaDistrictOffice office) {
-	final StringBuffer address = new StringBuffer();
-	if (!isEmpty(office.street)) {
-	    address.append(office.street);
-	}
-	if (!isEmpty(office.street2)) {
-	    if (address.length() > 0)
-		address.append(" ");
-	    address.append(office.street2);
-	}
-	if (!isEmpty(office.city)) {
-	    address.append(" " + office.city);
-	}
-	if (!isEmpty(office.province)) {
-	    address.append(", " + office.province);
-	}
-	if (!isEmpty(office.postalCode)) {
-	    address.append(" " + office.postalCode);
-	}
-	return address.toString();
-    }
-    
-    private boolean isEmpty(final String value) {
-	return value == null || "".equals(value) || "null".equals(value);
     }
 }

@@ -214,4 +214,8 @@ Small Business Program Finder Qualification:
 	app.bookmarks.removeBookmark(this);
 	app.saveBookmarks();
     }
+    
+    public String formatForSharing() {
+	return url;
+    }
 }

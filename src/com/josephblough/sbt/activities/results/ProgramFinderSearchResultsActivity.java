@@ -100,6 +100,23 @@ public class ProgramFinderSearchResultsActivity extends ListActivity implements 
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		SmallBusinessProgram program = ((SmallBusinessProgramDataAdapter)getListAdapter()).getItem(position);
+		showDetails(program);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(program.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, program.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<SmallBusinessProgram> results) {

@@ -14,4 +14,5 @@ public interface Bookmarkable {
     public String getDetailLabel(final int detail);
     public String getDetailValue(final int detail);
     public void removeFromBookmarks(ApplicationController app);
+    public String formatForSharing();
 }

@@ -125,4 +125,29 @@ public class SbaDistrictOffice {
 	return true;
     }
 
+    public String formatForSharing() {
+	final StringBuffer address = new StringBuffer();
+	if (!isEmpty(street)) {
+	    address.append(street);
+	}
+	if (!isEmpty(street2)) {
+	    if (address.length() > 0)
+		address.append(" ");
+	    address.append(street2);
+	}
+	if (!isEmpty(city)) {
+	    address.append(" " + city);
+	}
+	if (!isEmpty(province)) {
+	    address.append(", " + province);
+	}
+	if (!isEmpty(postalCode)) {
+	    address.append(" " + postalCode);
+	}
+	return address.toString();
+    }
+    
+    private boolean isEmpty(final String value) {
+	return value == null || "".equals(value) || "null".equals(value);
+    }
 }

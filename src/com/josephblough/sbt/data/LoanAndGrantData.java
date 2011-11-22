@@ -387,4 +387,8 @@ Loans and Grants Funding Types:
 	app.bookmarks.removeBookmark(this);
 	app.saveBookmarks();
     }
+    
+    public String formatForSharing() {
+	return url;
+    }
 }

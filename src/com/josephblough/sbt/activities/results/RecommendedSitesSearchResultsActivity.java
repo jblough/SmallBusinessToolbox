@@ -104,6 +104,23 @@ public class RecommendedSitesSearchResultsActivity extends ListActivity implemen
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		RecommendedSite site = ((RecommendedSitesDataAdapter)getListAdapter()).getItem(position);
+		showDetails(site);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(site.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, site.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<RecommendedSite> results) {

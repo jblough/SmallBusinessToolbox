@@ -112,6 +112,23 @@ public class AwardsSearchResultsActivity extends ListActivity implements AwardsR
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	
+	// Set a long click handler
+	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+	    public boolean onItemLongClick(AdapterView<?> parent, View view,
+		    int position, long id) {
+		Award award = ((AwardDataAdapter)getListAdapter()).getItem(position);
+		showDetails(award);
+
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(award.title));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, award.formatForSharing());
+		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		return true;
+	    }
+	});
     }
     
     public void success(List<Award> results) {
