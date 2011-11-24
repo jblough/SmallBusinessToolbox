@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,7 +29,7 @@ import com.josephblough.sbt.data.GenericPost;
 import com.josephblough.sbt.tasks.GenericPostsRetrieverTask;
 import com.josephblough.sbt.tasks.PdfCheckerTask;
 
-public class GenericSearchResultsActivity extends ListActivity implements GenericPostRetrieverCallback, OnItemClickListener {
+public class GenericSearchResultsActivity extends SearchResultsActivity implements GenericPostRetrieverCallback, OnItemClickListener {
 
     public final static String SEARCH_CRITERIA_EXTRA = "GenericSearchResultsActivity.SearchCriteria";
     
@@ -95,12 +94,15 @@ public class GenericSearchResultsActivity extends ListActivity implements Generi
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	getListView().setTextFilterEnabled(true);
 	
 	// Set a long click handler
 	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 	    public boolean onItemLongClick(AdapterView<?> parent, View view,
 		    int position, long id) {
+		hideSearch();
+
 		GenericPost post = ((GenericPostDataAdapter)getListAdapter()).getItem(position);
 		showDetails(post);
 
@@ -133,7 +135,9 @@ public class GenericSearchResultsActivity extends ListActivity implements Generi
 	}
 	
 	if (this.data == null || this.data.size() == 0)
-	    Toast.makeText(this, "No data returned", Toast.LENGTH_LONG).show();
+	    Toast.makeText(this, R.string.no_data_returned, Toast.LENGTH_LONG).show();
+	else
+	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
     }
 
     public void error(String error) {
@@ -143,13 +147,14 @@ public class GenericSearchResultsActivity extends ListActivity implements Generi
 	}
 	
 	Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-	Toast.makeText(this, "More specific search parameters may be needed to reduce the amount of data returned", Toast.LENGTH_LONG).show();
+	Toast.makeText(this, R.string.too_much_data, Toast.LENGTH_LONG).show();
 	finish();
     }
     
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	final GenericPost selectedItem = (GenericPost)getListAdapter().getItem(position);
+	hideSearch();
 
+	final GenericPost selectedItem = (GenericPost)getListAdapter().getItem(position);
 	showDetails(selectedItem);
     }
     
@@ -243,15 +248,14 @@ public class GenericSearchResultsActivity extends ListActivity implements Generi
 	app.saveBookmarks();
     }
 
-    // Hide the details view on BACK key press if it's showing
     @Override
-    public void onBackPressed() {
-	if (detailsView.isShown()) {
-	    detailsView.setVisibility(View.GONE);
-	    detailsControls.setVisibility(View.GONE);
-	}
-	else {
-	    super.onBackPressed();
-	}
+    protected boolean isDetailsViewShowing() {
+	return detailsView.isShown();
+    }
+
+    @Override
+    protected void hideDetailsView() {
+	detailsView.setVisibility(View.GONE);
+	detailsControls.setVisibility(View.GONE);
     }
 }

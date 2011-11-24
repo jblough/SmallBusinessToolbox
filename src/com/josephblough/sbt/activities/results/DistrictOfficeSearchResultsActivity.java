@@ -89,6 +89,7 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 	});
 	
 	getListView().setFastScrollEnabled(true);
+	getListView().setTextFilterEnabled(true);
 	
 	// Set a long click handler
 	getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -127,7 +128,7 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 	}
 	
 	if (this.data == null || this.data.size() == 0)
-	    Toast.makeText(this, "No data returned", Toast.LENGTH_LONG).show();
+	    Toast.makeText(this, R.string.no_data_returned, Toast.LENGTH_LONG).show();
     }
 
     public void error(String error) {

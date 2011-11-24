@@ -4,6 +4,11 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <include android:id="@+id/search_bar"
+    android:visibility="gone"
+    android:layout_alignParentTop="true"
+    layout="@layout/search_bar" />
+
     <LinearLayout android:id="@+id/locality_web_data_details_controls"
         android:visibility="gone"
         android:orientation="horizontal"
@@ -149,7 +154,7 @@
     <ListView android:id="@id/android:list" 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_above="@id/locality_web_data_details_table"
+        android:layout_below="@id/search_bar"
         />
 </RelativeLayout>

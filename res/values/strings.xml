@@ -2,4 +2,7 @@
 <resources>
     <string name="hello">Hello World, Small Business Toolbox!</string>
     <string name="app_name">Small Business Toolbox</string>
+    <string name="no_data_returned">No data returned</string>
+    <string name="filter_results_tooltip">Press the search button to filter search results</string>
+    <string name="too_much_data">More specific search parameters may be needed to reduce the amount of data returned</string>
 </resources>
