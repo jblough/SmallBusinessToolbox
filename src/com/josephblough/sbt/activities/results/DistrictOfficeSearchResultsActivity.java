@@ -2,6 +2,7 @@ package com.josephblough.sbt.activities.results;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -111,6 +112,7 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
     
     public void success(List<SbaDistrictOffice> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<SbaDistrictOffice>() {
 
@@ -232,6 +234,17 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 	startActivity(intent);
     }
 
+    private void removeInvalidResults() {
+	Iterator<SbaDistrictOffice> it = this.data.iterator();
+	while (it.hasNext()) {
+	    SbaDistrictOffice office = it.next();
+	    if (office.name == null || "".equals(office.name)) {
+		it.remove();
+	    }
+	}
+    }
+    
+    
     // Hide the details view on BACK key press if it's showing
     @Override
     public void onBackPressed() {

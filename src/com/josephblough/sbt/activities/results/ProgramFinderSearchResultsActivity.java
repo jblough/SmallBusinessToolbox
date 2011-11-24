@@ -2,6 +2,7 @@ package com.josephblough.sbt.activities.results;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -123,6 +124,7 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
     
     public void success(List<SmallBusinessProgram> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<SmallBusinessProgram>() {
 
@@ -267,6 +269,17 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 		//Toast.makeText(ProgramFinderSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
 	}
 	app.saveBookmarks();
+    }
+
+    private void removeInvalidResults() {
+	Iterator<SmallBusinessProgram> it = this.data.iterator();
+	while (it.hasNext()) {
+	    SmallBusinessProgram program = it.next();
+	    if (program.title == null || "".equals(program.title) ||
+		    program.url == null || "".equals(program.url)) {
+		it.remove();
+	    }
+	}
     }
     
     @Override

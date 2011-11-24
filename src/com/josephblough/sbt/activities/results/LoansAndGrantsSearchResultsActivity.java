@@ -2,6 +2,7 @@ package com.josephblough.sbt.activities.results;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -156,6 +157,7 @@ public class LoansAndGrantsSearchResultsActivity extends SearchResultsActivity i
     
     public void success(List<LoanAndGrantData> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<LoanAndGrantData>() {
 
@@ -328,6 +330,17 @@ public class LoansAndGrantsSearchResultsActivity extends SearchResultsActivity i
 	app.saveBookmarks();
     }
 
+    private void removeInvalidResults() {
+	Iterator<LoanAndGrantData> it = this.data.iterator();
+	while (it.hasNext()) {
+	    LoanAndGrantData loanAndGrantData = it.next();
+	    if (loanAndGrantData.title == null || "".equals(loanAndGrantData.title) ||
+		    loanAndGrantData.url == null || "".equals(loanAndGrantData.url)) {
+		it.remove();
+	    }
+	}
+    }
+    
     @Override
     protected boolean isDetailsViewShowing() {
 	return detailsView.isShown();

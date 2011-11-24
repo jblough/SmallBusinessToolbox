@@ -3,6 +3,7 @@ package com.josephblough.sbt.activities.results;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import com.josephblough.sbt.ApplicationController;
@@ -143,6 +144,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	everything.addAll(data.counties);
 	everything.addAll(data.localities);
 	
+	removeInvalidResults(everything);
 	Collections.sort(everything, new Comparator<LicenseAndPermitData>() {
 
 	    public int compare(LicenseAndPermitData data1, LicenseAndPermitData data2) {
@@ -310,6 +312,17 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 		//Toast.makeText(LicensesAndPermitsSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
 	}
 	app.saveBookmarks();
+    }
+
+    private void removeInvalidResults(List<LicenseAndPermitData> results) {
+	Iterator<LicenseAndPermitData> it = results.iterator();
+	while (it.hasNext()) {
+	    LicenseAndPermitData licenseAndPermitData = it.next();
+	    if (licenseAndPermitData.title == null || "".equals(licenseAndPermitData.title) ||
+		    licenseAndPermitData.url == null || "".equals(licenseAndPermitData.url)) {
+		it.remove();
+	    }
+	}
     }
     
     @Override

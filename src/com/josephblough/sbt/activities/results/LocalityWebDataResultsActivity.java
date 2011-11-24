@@ -2,6 +2,7 @@ package com.josephblough.sbt.activities.results;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -131,6 +132,7 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
     
     public void success(List<LocalityWebData> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<LocalityWebData>() {
 
@@ -293,6 +295,17 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	app.saveBookmarks();
     }
 
+    private void removeInvalidResults() {
+	Iterator<LocalityWebData> it = this.data.iterator();
+	while (it.hasNext()) {
+	    LocalityWebData webData = it.next();
+	    if (webData.title == null || "".equals(webData.title) ||
+		    webData.url == null || "".equals(webData.url)) {
+		it.remove();
+	    }
+	}
+    }
+    
     @Override
     protected boolean isDetailsViewShowing() {
 	return detailsView.isShown();

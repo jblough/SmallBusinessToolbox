@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -129,6 +130,7 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
     
     public void success(List<Solicitation> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<Solicitation>() {
 
@@ -280,6 +282,17 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 	app.saveBookmarks();
     }
     
+    private void removeInvalidResults() {
+	Iterator<Solicitation> it = this.data.iterator();
+	while (it.hasNext()) {
+	    Solicitation solicitation = it.next();
+	    if (solicitation.title == null || "".equals(solicitation.title) ||
+		    solicitation.link == null || "".equals(solicitation.link)) {
+		it.remove();
+	    }
+	}
+    }
+
     @Override
     protected boolean isDetailsViewShowing() {
 	return detailsView.isShown();

@@ -2,6 +2,7 @@ package com.josephblough.sbt.activities.results;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -104,6 +105,7 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
     
     public void success(List<GreenPost> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<GreenPost>() {
 
@@ -211,6 +213,17 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 		//Toast.makeText(GreenSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
 	}
 	app.saveBookmarks();
+    }
+    
+    private void removeInvalidResults() {
+	Iterator<GreenPost> it = this.data.iterator();
+	while (it.hasNext()) {
+	    GreenPost post = it.next();
+	    if (post.title == null || "".equals(post.title) ||
+		    post.url == null || "".equals(post.url)) {
+		it.remove();
+	    }
+	}
     }
     
     @Override

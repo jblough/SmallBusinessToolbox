@@ -2,6 +2,7 @@ package com.josephblough.sbt.activities.results;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -127,6 +128,7 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
     
     public void success(List<RecommendedSite> results) {
 	this.data = results;
+	removeInvalidResults();
 	
 	Collections.sort(this.data, new Comparator<RecommendedSite>() {
 
@@ -277,6 +279,17 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 		//Toast.makeText(RecommendedSitesSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
 	}
 	app.saveBookmarks();
+    }
+
+    private void removeInvalidResults() {
+	Iterator<RecommendedSite> it = this.data.iterator();
+	while (it.hasNext()) {
+	    RecommendedSite site = it.next();
+	    if (site.title == null || "".equals(site.title) ||
+		    site.url == null || "".equals(site.url)) {
+		it.remove();
+	    }
+	}
     }
     
     @Override
