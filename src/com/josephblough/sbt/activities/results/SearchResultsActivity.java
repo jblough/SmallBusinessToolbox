@@ -36,6 +36,12 @@ public abstract class SearchResultsActivity extends ListActivity implements OnEd
 		hideSearch();
 	    }
 	}
+	else if (searchView != null && searchView.isShown()) {
+	    // Hide the search bar if visible
+	    if (searchView != null && searchView.isShown()) {
+		hideSearch();
+	    }
+	}
 	else {
 	    super.onBackPressed();
 	}
