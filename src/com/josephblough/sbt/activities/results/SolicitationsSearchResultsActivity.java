@@ -117,7 +117,7 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(solicitation.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(solicitation.title).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, solicitation.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;

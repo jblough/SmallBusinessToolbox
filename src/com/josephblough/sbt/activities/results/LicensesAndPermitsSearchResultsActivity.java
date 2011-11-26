@@ -123,7 +123,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.title).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, licenseAndPermitData.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;

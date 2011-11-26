@@ -92,7 +92,7 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(post.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(post.title).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, post.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;

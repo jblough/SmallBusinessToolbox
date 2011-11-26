@@ -119,7 +119,7 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(webData.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(webData.name).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, webData.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
@@ -134,7 +134,7 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	Collections.sort(this.data, new Comparator<LocalityWebData>() {
 
 	    public int compare(LocalityWebData data1, LocalityWebData data2) {
-		return data1.title.compareTo(data2.title);
+		return data1.name.compareTo(data2.name);
 	    }
 	});
 

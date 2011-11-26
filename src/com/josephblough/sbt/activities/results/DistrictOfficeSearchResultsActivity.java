@@ -102,7 +102,7 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(office.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(office.name).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, office.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;

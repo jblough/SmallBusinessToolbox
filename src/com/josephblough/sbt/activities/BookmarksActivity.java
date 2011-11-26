@@ -182,7 +182,7 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(bookmark.getName()));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(bookmark.getName()).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, bookmark.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;

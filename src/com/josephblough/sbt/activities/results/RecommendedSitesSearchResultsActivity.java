@@ -115,7 +115,7 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(site.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(site.title).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, site.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;

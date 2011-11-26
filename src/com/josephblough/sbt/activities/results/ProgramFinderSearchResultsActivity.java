@@ -111,7 +111,7 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(program.title));
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(program.title).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, program.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
