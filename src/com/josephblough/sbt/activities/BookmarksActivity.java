@@ -383,8 +383,13 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
             adapter.sections.remove("SBA District Offices");
         }
         
-        setListAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if (adapter.sections.size() == 0) {
+            finish();
+        }
+        else {
+            setListAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -506,7 +511,7 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
         		msg.append("<b>" + office.getDetailLabel(i) + "</b> " + office.getDetailValue(i) + "<br/>");
         	    }
         	}
-        	msg.append("<b>Map address:</b> " + office.getUrl() + "<br/>");
+        	//msg.append("<b>Map address:</b> " + office.getUrl() + "<br/>");
         	msg.append("<br/>");
             }
         }

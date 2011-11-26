@@ -350,6 +350,7 @@ public class Bookmarks {
 		localityWebDataBookmarks.isEmpty() &&
 		recommendedSitesBookmarks.isEmpty() &&
 		smallBusinessProgramBookmarks.isEmpty() &&
-		solicitationBookmarks.isEmpty();
+		solicitationBookmarks.isEmpty() &&
+		officeBookmarks.isEmpty();
     }
 }
