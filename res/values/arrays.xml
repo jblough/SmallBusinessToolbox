@@ -270,7 +270,7 @@
     </string-array>
 
     <string-array name="district_office_options">
-        <item>Find Nearest Ofice</item>
+        <item>Find Nearest Office</item>
         <item>By State</item>
         <item>By Zip Code</item>
     </string-array>

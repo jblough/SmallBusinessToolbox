@@ -7,8 +7,17 @@ import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.BookmarkDataAdapter;
 import com.josephblough.sbt.adapters.SeparatedListAdapter;
+import com.josephblough.sbt.data.Award;
 import com.josephblough.sbt.data.Bookmarkable;
+import com.josephblough.sbt.data.GenericPost;
+import com.josephblough.sbt.data.GreenPost;
+import com.josephblough.sbt.data.LicenseAndPermitData;
+import com.josephblough.sbt.data.LoanAndGrantData;
+import com.josephblough.sbt.data.LocalityWebData;
+import com.josephblough.sbt.data.RecommendedSite;
 import com.josephblough.sbt.data.SbaDistrictOffice;
+import com.josephblough.sbt.data.SmallBusinessProgram;
+import com.josephblough.sbt.data.Solicitation;
 import com.josephblough.sbt.tasks.PdfCheckerTask;
 
 import android.app.ListActivity;
@@ -17,6 +26,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -373,5 +385,148 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
         
         setListAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+	MenuInflater inflater = getMenuInflater();
+	inflater.inflate(R.menu.bookmarks_menu, menu);
+	
+	return true;
+    }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case R.id.email_bookmarks_menu_item:
+	    emailBookmarks();
+	    break;
+	}
+	
+	return super.onOptionsItemSelected(item);
+    }
+    
+    private void emailBookmarks() {
+	Intent sharingIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Bookmarks");
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(generateBookmarkMessage()));
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
+    }
+    
+    private String generateBookmarkMessage() {
+	final StringBuffer msg = new StringBuffer("<html><body>");
+
+        ApplicationController app = (ApplicationController)getApplicationContext();
+        // Licenses and Permits
+        if (app.bookmarks.licensePermitBookmarks.size() > 0) {
+            msg.append("<h1>Licenses and Permits</h1><br/>");
+            for (LicenseAndPermitData data : app.bookmarks.licensePermitBookmarks) {
+        	msg.append(generateBookmarkHtml(data));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Loans and Grants
+        if (app.bookmarks.loanGrantBookmarks.size() > 0) {
+            msg.append("<h1>Loans and Grants</h1><br/>");
+            for (LoanAndGrantData data : app.bookmarks.loanGrantBookmarks) {
+        	msg.append(generateBookmarkHtml(data));
+            }
+            msg.append("<br/>");
+        }
+
+        // Recommended Sites
+        if (app.bookmarks.recommendedSitesBookmarks.size() > 0) {
+            msg.append("<h1>Recommended Sites</h1><br/>");
+            for (RecommendedSite site : app.bookmarks.recommendedSitesBookmarks) {
+        	msg.append(generateBookmarkHtml(site));
+            }
+            msg.append("<br/>");
+        }
+        
+        // City/County Web Data
+        if (app.bookmarks.localityWebDataBookmarks.size() > 0) {
+            msg.append("<h1>City/County Web Data</h1><br/>");
+            for (LocalityWebData data : app.bookmarks.localityWebDataBookmarks) {
+        	msg.append(generateBookmarkHtml(data));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Small Business Programs
+        if (app.bookmarks.smallBusinessProgramBookmarks.size() > 0) {
+            msg.append("<h1>Small Business Programs</h1><br/>");
+            for (SmallBusinessProgram program : app.bookmarks.smallBusinessProgramBookmarks) {
+        	msg.append(generateBookmarkHtml(program));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Solicitations
+        if (app.bookmarks.solicitationBookmarks.size() > 0) {
+            msg.append("<h1>Solicitations</h1><br/>");
+            for (Solicitation solicitation : app.bookmarks.solicitationBookmarks) {
+        	msg.append(generateBookmarkHtml(solicitation));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Awards
+        if (app.bookmarks.awardBookmarks.size() > 0) {
+            msg.append("<h1>Awards</h1><br/>");
+            for (Award award : app.bookmarks.awardBookmarks) {
+        	msg.append(generateBookmarkHtml(award));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Green Posts
+        if (app.bookmarks.greenPostBookmarks.size() > 0) {
+            msg.append("<h1>Green Search Results</h1><br/>");
+            for (GreenPost post : app.bookmarks.greenPostBookmarks) {
+        	msg.append(generateBookmarkHtml(post));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Generic Posts
+        if (app.bookmarks.genericPostBookmarks.size() > 0) {
+            msg.append("<h1>Generic Search Results</h1><br/>");
+            for (GenericPost post : app.bookmarks.genericPostBookmarks) {
+        	msg.append(generateBookmarkHtml(post));
+            }
+            msg.append("<br/>");
+        }
+        
+        // Offices
+        if (app.bookmarks.officeBookmarks.size() > 0) {
+            msg.append("<h1>SBA District Offices</h1><br/>");
+            for (SbaDistrictOffice office : app.bookmarks.officeBookmarks) {
+        	msg.append("<h6>" + office.getName() + "</h6>");
+        	for (int i=0; i<office.getDetailCount(); i++) {
+        	    if (office.isVisible(i)) {
+        		msg.append("<b>" + office.getDetailLabel(i) + "</b> " + office.getDetailValue(i) + "<br/>");
+        	    }
+        	}
+        	msg.append("<b>Map address:</b> " + office.getUrl() + "<br/>");
+        	msg.append("<br/>");
+            }
+        }
+	
+        msg.append("</body></html>");
+        
+	return msg.toString();
+    }
+    
+    public static String generateBookmarkHtml(final Bookmarkable bookmark) {
+	final StringBuffer msg = new StringBuffer();
+	
+	msg.append("<h6>" + bookmark.getName() + "</h6>");
+	for (int i=0; i<bookmark.getDetailCount(); i++) {
+	    if (bookmark.isVisible(i)) {
+		msg.append("<b>" + bookmark.getDetailLabel(i) + "</b> " + bookmark.getDetailValue(i) + "<br/>");
+	    }
+	}
+	msg.append("<br/>");
+	
+	return msg.toString();
     }
 }

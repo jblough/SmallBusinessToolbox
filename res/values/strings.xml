@@ -9,4 +9,5 @@
     <string name="unbookmarked">Bookmark removed</string>
     <string name="visit_link">Visit Link</string>
     <string name="map_address">Map Address</string>
+    <string name="email_bookmarks">Email bookmarks</string>
 </resources>
