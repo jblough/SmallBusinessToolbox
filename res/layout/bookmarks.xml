@@ -13,7 +13,7 @@
         android:background="@color/details_background"
         >
     <Button android:id="@+id/bookmarks_details_visit_link"
-        android:text="Visit Link"
+        android:text="@string/visit_link"
         android:layout_width="match_parent" 
         android:layout_height="wrap_content"
         android:layout_gravity="center"

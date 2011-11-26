@@ -7,4 +7,6 @@
     <string name="too_much_data">More specific search parameters may be needed to reduce the amount of data returned</string>
     <string name="bookmarked">Bookmark added</string>
     <string name="unbookmarked">Bookmark removed</string>
+    <string name="visit_link">Visit Link</string>
+    <string name="map_address">Map Address</string>
 </resources>

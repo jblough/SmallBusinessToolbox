@@ -2,6 +2,7 @@ package com.josephblough.sbt.adapters;
 
 import java.util.List;
 
+import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.data.SbaDistrictOffice;
 
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DistrictOfficeDataAdapter extends ArrayAdapter<SbaDistrictOffice> {
 
@@ -51,8 +53,7 @@ public class DistrictOfficeDataAdapter extends ArrayAdapter<SbaDistrictOffice> {
 	holder.titleText.setText(Html.fromHtml(office.title));
 	holder.subTitleText.setText(office.formatForSharing());
 	
-	holder.bookmarkedImage.setVisibility(View.GONE);
-	/*final ApplicationController app = (ApplicationController)context.getApplicationContext();
+	final ApplicationController app = (ApplicationController)context.getApplicationContext();
 	holder.bookmarkedImage.setImageResource((app.bookmarks.isBookmarked(office)) ? 
 		R.drawable.bookmarked : R.drawable.unbookmarked);
 	
@@ -71,7 +72,7 @@ public class DistrictOfficeDataAdapter extends ArrayAdapter<SbaDistrictOffice> {
 		}
 		app.saveBookmarks();
 	    }
-	});*/
+	});
 
 	return row;
     }

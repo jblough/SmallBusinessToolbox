@@ -8,6 +8,7 @@ import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.BookmarkDataAdapter;
 import com.josephblough.sbt.adapters.SeparatedListAdapter;
 import com.josephblough.sbt.data.Bookmarkable;
+import com.josephblough.sbt.data.SbaDistrictOffice;
 import com.josephblough.sbt.tasks.PdfCheckerTask;
 
 import android.app.ListActivity;
@@ -96,6 +97,12 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
             List<Bookmarkable> genericPostBookmarks = new ArrayList<Bookmarkable>();
             genericPostBookmarks.addAll(app.bookmarks.genericPostBookmarks);
             adapter.addSection("Generic Search Results", new BookmarkDataAdapter(this, genericPostBookmarks));
+        }
+        // Offices
+        if (app.bookmarks.officeBookmarks.size() > 0) {
+            List<Bookmarkable> officeBookmarks = new ArrayList<Bookmarkable>();
+            officeBookmarks.addAll(app.bookmarks.officeBookmarks);
+            adapter.addSection("SBA District Offices", new BookmarkDataAdapter(this, officeBookmarks));
         }
         
         setListAdapter(adapter);
@@ -204,6 +211,13 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	    }
 	}
 	
+	if (SbaDistrictOffice.TYPE.equals(bookmark.getType())) {
+	    visitUrlButton.setText(R.string.map_address);
+	}
+	else {
+	    visitUrlButton.setText(R.string.visit_link);
+	}
+	
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
@@ -216,12 +230,21 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
     }
     
     private void visitData(final Bookmarkable bookmark) {
-	// Display a warning message to the user if this is a PDF document
-	new PdfCheckerTask(this).execute(bookmark.getUrl());
-	
-	// Launch the document
-	final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(bookmark.getUrl()));
-	startActivity(intent);
+	if (SbaDistrictOffice.TYPE.equals(bookmark.getType())) {
+	    SbaDistrictOffice office = (SbaDistrictOffice)bookmark;
+	    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+		    Uri.parse("geo:0,0?q=" + office.latitude + "," + office.longitude + 
+			    " (" + office.title + " " + office.street + ")"));
+	    startActivity(intent);
+	}
+	else {
+	    // Display a warning message to the user if this is a PDF document
+	    new PdfCheckerTask(this).execute(bookmark.getUrl());
+
+	    // Launch the document
+	    final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(bookmark.getUrl()));
+	    startActivity(intent);
+	}
     }
     
     // Hide the details view on BACK key press if it's showing
@@ -337,6 +360,15 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
         }
         else {
             adapter.sections.remove("Generic Search Results");
+        }
+        // Offices
+        if (app.bookmarks.officeBookmarks.size() > 0) {
+            List<Bookmarkable> officeBookmarks = new ArrayList<Bookmarkable>();
+            officeBookmarks.addAll(app.bookmarks.officeBookmarks);
+            adapter.addSection("SBA District Offices", new BookmarkDataAdapter(this, officeBookmarks));
+        }
+        else {
+            adapter.sections.remove("SBA District Offices");
         }
         
         setListAdapter(adapter);

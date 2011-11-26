@@ -35,6 +35,7 @@ public class Bookmarks {
     private static final String RECOMMENDED_SITES_KEY = "recommended_sites";
     private static final String SMALL_BUSINESS_PROGRAMS_KEY = "small_business_programs";
     private static final String SOLICITATIONS_KEY = "solicitations";
+    private static final String OFFICES_KEY = "offices";
     
     public List<Award> awardBookmarks;
     public List<GenericPost> genericPostBookmarks;
@@ -45,6 +46,7 @@ public class Bookmarks {
     public List<RecommendedSite> recommendedSitesBookmarks;
     public List<SmallBusinessProgram> smallBusinessProgramBookmarks;
     public List<Solicitation> solicitationBookmarks;
+    public List<SbaDistrictOffice> officeBookmarks;
     
     public Bookmarks() {
 	awardBookmarks = new ArrayList<Award>();
@@ -56,6 +58,7 @@ public class Bookmarks {
 	recommendedSitesBookmarks = new ArrayList<RecommendedSite>();
 	smallBusinessProgramBookmarks = new ArrayList<SmallBusinessProgram>();
 	solicitationBookmarks = new ArrayList<Solicitation>();
+	officeBookmarks = new ArrayList<SbaDistrictOffice>();
     }
     
     public void addBookmark(final Award award) {
@@ -175,6 +178,19 @@ public class Bookmarks {
 	solicitationBookmarks.remove(solicitation);
     }
     
+    public void addBookmark(final SbaDistrictOffice office) {
+	if (!isBookmarked(office))
+	    officeBookmarks.add(office);
+    }
+    
+    public boolean isBookmarked(final SbaDistrictOffice office) {
+	return officeBookmarks.contains(office);
+    }
+    
+    public void removeBookmark(final SbaDistrictOffice office) {
+	officeBookmarks.remove(office);
+    }
+    
     public void loadBookmarks(final Context context) {
 	// Probably do this in an async task
 	try {
@@ -252,6 +268,14 @@ public class Bookmarks {
 		ctr++;
 	    }
 	    
+	    //	Offices
+	    ctr = 1;
+	    while (prefs.contains(OFFICES_KEY + ctr)) {
+		String officeAsJson = prefs.getString(OFFICES_KEY + ctr, null);
+		officeBookmarks.add(new SbaDistrictOffice(new JSONObject(officeAsJson)));
+		ctr++;
+	    }
+	    
 	}
 	catch (JSONException e) {
 	    Log.e(TAG, e.getMessage(), e);
@@ -307,6 +331,11 @@ public class Bookmarks {
 	// Solicitations
 	for (int ctr = 0; ctr < solicitationBookmarks.size(); ctr++) {
 	    editor.putString(SOLICITATIONS_KEY + (ctr+1), solicitationBookmarks.get(ctr).toJson());
+	}
+
+	// Offices
+	for (int ctr = 0; ctr < officeBookmarks.size(); ctr++) {
+	    editor.putString(OFFICES_KEY + (ctr+1), officeBookmarks.get(ctr).toJson());
 	}
 
 	editor.commit();

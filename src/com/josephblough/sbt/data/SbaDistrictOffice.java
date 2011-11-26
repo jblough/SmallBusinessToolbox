@@ -1,9 +1,18 @@
 package com.josephblough.sbt.data;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SbaDistrictOffice {
+import android.util.Log;
 
+import com.josephblough.sbt.ApplicationController;
+
+public class SbaDistrictOffice implements Bookmarkable {
+
+    private final static String TAG = "SbaDistrictOffice";
+
+    public final static String TYPE = "SBA District Office";
+    
     public String title;
     public String name;
     public String street;
@@ -147,7 +156,109 @@ public class SbaDistrictOffice {
 	return address.toString();
     }
     
+    private String formatLocation() {
+	final StringBuffer location = new StringBuffer();
+	if (!isEmpty(city)) {
+	    location.append(city);
+	}
+	if (!isEmpty(province)) {
+	    if (location.length() > 0)
+		location.append(", ");
+	    location.append(province);
+	}
+	if (!isEmpty(postalCode)) {
+	    if (location.length() > 0)
+		location.append(" ");
+	    location.append(postalCode);
+	}
+	return location.toString();
+    }
+    
     private boolean isEmpty(final String value) {
 	return value == null || "".equals(value) || "null".equals(value);
+    }
+
+    public String getType() {
+	return TYPE;
+    }
+
+    public String getName() {
+	return name;
+    }
+
+    public String getUrl() {
+	return formatForSharing();
+    }
+
+    public String toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    if (title != null)
+		json.put("title", title);
+	    if (name != null)
+		json.put("field_name_value", name);
+	    if (street != null)
+		json.put("field_street_value", street);
+	    if (street2 != null)
+		json.put("field_street2_value", street2);
+	    if (city != null)
+		json.put("field_city_value", city);
+	    if (province != null)
+		json.put("field_province_value", province);
+	    if (postalCode != null)
+		json.put("field_postal_code_value", postalCode);
+	    if (country != null)
+		json.put("field_country_value", country);
+	    if (latitude != null)
+		json.put("field_latitude_value", latitude);
+	    if (longitude != null)
+		json.put("field_longitude_value", longitude);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	
+	return json.toString();
+    }
+
+    public int getDetailCount() {
+	return 5;
+    }
+
+    public boolean isVisible(int detail) {
+	return !isEmpty(getDetailValue(detail));
+    }
+
+    public String getDetailLabel(int detail) {
+	switch (detail) {
+	case 0:
+	    return "Title:";
+	case 1:
+	    return "Name:";
+	case 2:
+	    return "Address:";
+	};
+	return "";
+    }
+
+    public String getDetailValue(int detail) {
+	switch (detail) {
+	case 0:
+	    return title;
+	case 1:
+	    return name;
+	case 2:
+	    return street;
+	case 3:
+	    return street2;
+	case 4:
+	    return this.formatLocation();
+	};
+	return null;
+    }
+
+    public void removeFromBookmarks(ApplicationController app) {
+	app.bookmarks.removeBookmark(this);
+	app.saveBookmarks();
     }
 }
