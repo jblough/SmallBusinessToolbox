@@ -27,7 +27,7 @@ public class ProgramFinderSearchCriteria implements Parcelable {
 	else if (type == TYPE_BY_NATIONAL_INDEX)
 	    this.criteria = "National";
 	else
-	    this.criteria = criteria;
+	    this.criteria = (criteria == null) ? null : criteria.trim();
     }
     
     public int describeContents() {

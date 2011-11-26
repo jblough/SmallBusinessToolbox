@@ -21,9 +21,9 @@ public class LoansAndGrantsSearchCriteria implements Parcelable {
 	    boolean filterByIndustry, String industry, boolean filteryBySpecialty, List<String> specialties) {
 	this.includeFederal = includeFederal;
 	this.includeState = includeState;
-	this.state = state;
+	this.state = (state == null) ? null : state.trim();
 	this.filterByIndustry = filterByIndustry;
-	this.industry = industry;
+	this.industry = (industry == null) ? null : industry.trim();
 	this.filterBySpecialty = filteryBySpecialty;
 	this.specialties = specialties;
     }

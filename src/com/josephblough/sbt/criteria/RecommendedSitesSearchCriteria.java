@@ -17,7 +17,7 @@ public class RecommendedSitesSearchCriteria implements Parcelable {
     
     public RecommendedSitesSearchCriteria(int searchBy, String searhTerm) {
 	this.searchBy = searchBy;
-	this.searchTerm = searhTerm;
+	this.searchTerm = (searhTerm == null) ? null : searhTerm.trim();
     }
     
     public int describeContents() {

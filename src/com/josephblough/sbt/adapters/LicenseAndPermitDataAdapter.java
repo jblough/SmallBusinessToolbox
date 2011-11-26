@@ -50,7 +50,7 @@ public class LicenseAndPermitDataAdapter extends ArrayAdapter<LicenseAndPermitDa
             holder = (ViewHolder)row.getTag();
 	
 	final LicenseAndPermitData data = getItem(position);
-	holder.titleText.setText(Html.fromHtml(data.title));
+	holder.titleText.setText(Html.fromHtml(data.getName()));
 	holder.subTitleText.setText(data.url);
 	
 	final ApplicationController app = (ApplicationController)context.getApplicationContext();

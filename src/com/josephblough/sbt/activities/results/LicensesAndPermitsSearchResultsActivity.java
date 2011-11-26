@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.LicenseAndPermitDataAdapter;
+import com.josephblough.sbt.adapters.SeparatedListAdapter;
 import com.josephblough.sbt.callbacks.LicensesAndPermitsRetrieverCallback;
 import com.josephblough.sbt.criteria.LicensesAndPermitsSearchCriteria;
 import com.josephblough.sbt.data.LicenseAndPermitData;
@@ -118,19 +119,19 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 		    int position, long id) {
 		hideSearch();
 
-		LicenseAndPermitData licenseAndPermitData = ((LicenseAndPermitDataAdapter)getListAdapter()).getItem(position);
+		LicenseAndPermitData licenseAndPermitData = (LicenseAndPermitData)getListAdapter().getItem(position);
 		showDetails(licenseAndPermitData);
 
 		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.title).toString());
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.getName()).toString());
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, licenseAndPermitData.formatForSharing());
 		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
 	    }
 	});
     }
-
+/*
     public void success(LicenseAndPermitDataCollection results) {
 	this.data = results;
 	
@@ -145,7 +146,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	Collections.sort(everything, new Comparator<LicenseAndPermitData>() {
 
 	    public int compare(LicenseAndPermitData data1, LicenseAndPermitData data2) {
-		return data1.title.compareTo(data2.title);
+		return data1.getName().compareTo(data2.getName());
 	    }
 	});
 
@@ -158,6 +159,61 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	}
 	
 	if (everything.size() == 0)
+	    Toast.makeText(this, R.string.no_data_returned, Toast.LENGTH_LONG).show();
+	else
+	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
+    }
+*/
+    public void success(LicenseAndPermitDataCollection results) {
+	this.data = results;
+
+        SeparatedListAdapter adapter = new SeparatedListAdapter(this);
+	
+        LicenseAndPermitDataComparator comparator = new LicenseAndPermitDataComparator();
+        
+	removeInvalidResults(data.businessTypes);
+	if (data.businessTypes.size() > 0) {
+	    Collections.sort(data.businessTypes, comparator);
+	    LicenseAndPermitDataAdapter dataAdapter = new LicenseAndPermitDataAdapter(this, data.businessTypes);
+	    adapter.addSection("Business Types", dataAdapter);
+	}
+	
+	removeInvalidResults(data.categories);
+	if (data.categories.size() > 0) {
+	    Collections.sort(data.categories, comparator);
+	    LicenseAndPermitDataAdapter dataAdapter = new LicenseAndPermitDataAdapter(this, data.categories);
+	    adapter.addSection("Categories", dataAdapter);
+	}
+	
+	removeInvalidResults(data.states);
+	if (data.states.size() > 0) {
+	    Collections.sort(data.states, comparator);
+	    LicenseAndPermitDataAdapter dataAdapter = new LicenseAndPermitDataAdapter(this, data.states);
+	    adapter.addSection("States", dataAdapter);
+	}
+	
+	removeInvalidResults(data.counties);
+	if (data.counties.size() > 0) {
+	    Collections.sort(data.counties, comparator);
+	    LicenseAndPermitDataAdapter dataAdapter = new LicenseAndPermitDataAdapter(this, data.counties);
+	    adapter.addSection("Counties", dataAdapter);
+	}
+	
+	removeInvalidResults(data.localities);
+	if (data.localities.size() > 0) {
+	    Collections.sort(data.localities, comparator);
+	    LicenseAndPermitDataAdapter dataAdapter = new LicenseAndPermitDataAdapter(this, data.localities);
+	    adapter.addSection("Localiies", dataAdapter);
+	}
+
+	setListAdapter(adapter);
+	
+	if (progress != null) {
+	    progress.dismiss();
+	    progress = null;
+	}
+	
+	if (adapter.sections.size() == 0)
 	    Toast.makeText(this, R.string.no_data_returned, Toast.LENGTH_LONG).show();
 	else
 	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
@@ -288,11 +344,16 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	Iterator<LicenseAndPermitData> it = results.iterator();
 	while (it.hasNext()) {
 	    LicenseAndPermitData licenseAndPermitData = it.next();
-	    if (licenseAndPermitData.title == null || "".equals(licenseAndPermitData.title) ||
-		    licenseAndPermitData.url == null || "".equals(licenseAndPermitData.url)) {
+	    if (!isValid(licenseAndPermitData))
 		it.remove();
-	    }
 	}
+    }
+    
+    private boolean isValid(final LicenseAndPermitData licenseAndPermitData) {
+	final String name = licenseAndPermitData.getName();
+	return (name != null && !"".equals(name) &&
+		licenseAndPermitData.url != null && !"".equals(licenseAndPermitData.url) &&
+		!"null".equals(licenseAndPermitData.url));
     }
     
     @Override
@@ -304,5 +365,11 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
     protected void hideDetailsView() {
 	detailsView.setVisibility(View.GONE);
 	detailsControls.setVisibility(View.GONE);
+    }
+    
+    private class LicenseAndPermitDataComparator implements Comparator<LicenseAndPermitData> {
+	public int compare(LicenseAndPermitData data1, LicenseAndPermitData data2) {
+	    return data1.getName().compareTo(data2.getName());
+	}
     }
 }

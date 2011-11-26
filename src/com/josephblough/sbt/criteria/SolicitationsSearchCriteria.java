@@ -15,8 +15,8 @@ public class SolicitationsSearchCriteria implements Parcelable {
     
     
     public SolicitationsSearchCriteria(String keyword, String agency, int filter) {
-	this.keyword = keyword;
-	this.agency = agency;
+	this.keyword = (keyword == null) ? null : keyword.trim();
+	this.agency = (agency == null) ? null : agency.trim();
 	this.filter = filter;
     }
     

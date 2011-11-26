@@ -15,9 +15,9 @@ public class GenericSearchCriteria implements Parcelable {
     public GenericSearchCriteria(boolean downloadAll, boolean onlyNew, String searchTerm, String agency, String type) {
 	this.downloadAll = downloadAll;
 	this.onlyNew = onlyNew;
-	this.searchTerm = searchTerm;
-	this.agency = agency;
-	this.type = type;
+	this.searchTerm = (searchTerm == null) ? null : searchTerm.trim();
+	this.agency = (agency == null) ? null : agency.trim();
+	this.type = (type == null) ? null : type.trim();
     }
     
     public int describeContents() {

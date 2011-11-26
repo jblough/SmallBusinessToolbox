@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
+        android:inputType="text|textEmailAddress"
         android:layout_below="@id/solicitations_search_term_label"
         />
         

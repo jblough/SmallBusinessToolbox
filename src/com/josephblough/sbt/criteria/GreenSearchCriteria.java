@@ -13,9 +13,9 @@ public class GreenSearchCriteria implements Parcelable {
     
     public GreenSearchCriteria(boolean downloadAll, String searchTerm, String agency, String type) {
 	this.downloadAll = downloadAll;
-	this.searchTerm = searchTerm;
-	this.agency = agency;
-	this.type = type;
+	this.searchTerm = (searchTerm == null) ? null : searchTerm.trim();
+	this.agency = (agency == null) ? null : agency.trim();
+	this.type = (type == null) ? null : type.trim();
     }
     
     public int describeContents() {

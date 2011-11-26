@@ -15,7 +15,7 @@ public class DistrictOfficeSearchCriteria implements Parcelable {
     
     public DistrictOfficeSearchCriteria(int type, String criteria) {
 	this.type = type;
-	this.criteria = criteria;
+	this.criteria = (criteria == null) ? null : criteria.trim();
     }
     
     public int describeContents() {

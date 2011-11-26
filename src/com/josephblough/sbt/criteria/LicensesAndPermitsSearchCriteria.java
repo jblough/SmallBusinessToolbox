@@ -24,11 +24,12 @@ public class LicensesAndPermitsSearchCriteria implements Parcelable {
     
     public LicensesAndPermitsSearchCriteria(int searchBy, String state, String category, String businessType, int businessTypeSubfilter, String businessTypeSubfilterLocality) {
 	this.searchBy = searchBy;
-	this.state = state;
-	this.category = category;
-	this.businessType = businessType;
+	this.state = (state == null) ? null : state.trim();
+	this.category = (category == null) ? null : category.trim();
+	this.businessType = (businessType == null) ? null : businessType.trim();
 	this.businessTypeSubfilter = businessTypeSubfilter;
-	this.businessTypeSubfilterLocality = businessTypeSubfilterLocality;
+	this.businessTypeSubfilterLocality = (businessTypeSubfilterLocality == null) ? null : 
+	    businessTypeSubfilterLocality.trim();
     }
     
     public int describeContents() {

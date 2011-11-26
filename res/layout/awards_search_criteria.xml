@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
+        android:inputType="text|textEmailAddress"
         android:layout_below="@id/awards_search_term_label"
         />
         
@@ -67,6 +68,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:imeOptions="actionDone"
+        android:inputType="text|textEmailAddress"
         android:layout_below="@id/awards_company_checkbox"
         />
 
@@ -81,6 +83,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:imeOptions="actionDone"
+        android:inputType="text|textEmailAddress"
         android:layout_below="@id/awards_institution_checkbox"
         />
 

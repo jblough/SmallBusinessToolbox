@@ -105,6 +105,7 @@
         <EditText android:id="@+id/licenses_and_permits_business_types_locality_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text|textEmailAddress"
             android:imeOptions="actionDone"
             />
     </LinearLayout>

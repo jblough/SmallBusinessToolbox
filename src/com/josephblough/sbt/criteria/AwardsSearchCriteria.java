@@ -15,10 +15,10 @@ public class AwardsSearchCriteria implements Parcelable {
     
     public AwardsSearchCriteria(boolean downloadAll, String searchTerm, String agency, String company, String institution, int year) {
 	this.downloadAll = downloadAll;
-	this.searchTerm = searchTerm;
-	this.agency = agency;
-	this.company = company;
-	this.institution = institution;
+	this.searchTerm = (searchTerm == null) ? null : searchTerm.trim();
+	this.agency = (agency == null) ? null : agency.trim();
+	this.company = (company == null) ? null : company.trim();
+	this.institution = (institution == null) ? null : institution.trim();
 	this.year = year;
     }
     

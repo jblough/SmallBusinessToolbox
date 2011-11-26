@@ -91,7 +91,17 @@ public class LicenseAndPermitData implements Bookmarkable {
     }
 
     public String getName() {
-	return title;
+	if (title != null && !"".equals(title) &&
+		!"null".equals(title))
+	    return title;
+	else if (county != null && !"".equals(county) &&
+		!"null".equals(county))
+	    return county;
+	else if (state != null && !"".equals(state) &&
+		!"null".equals(state))
+	    return state;
+	
+	return "";
     }
 
     public String getUrl() {

@@ -25,8 +25,8 @@ public class LocalityWebDataSearchCriteria implements Parcelable {
     public LocalityWebDataSearchCriteria(int type, int scope, String state, String locality) {
 	this.type = type;
 	this.scope = scope;
-	this.state = state;
-	this.locality = locality;
+	this.state = (state == null) ? null : state.trim();
+	this.locality = (locality == null) ? null : locality.trim();
     }
     
     public int describeContents() {
