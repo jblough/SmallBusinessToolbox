@@ -19,7 +19,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.SmallBusinessProgramDataAdapter;
 import com.josephblough.sbt.callbacks.ProgramFinderRetrieverCallback;
@@ -50,7 +49,6 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
     private TableRow stateRow;
     private TableRow agencyRow;
     
-    private Button addBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -71,7 +69,6 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 	
 	detailsView = findViewById(R.id.program_finder_details_table);
 	detailsControls = findViewById(R.id.program_finder_details_controls);
-	addBookmarkButton = (Button)findViewById(R.id.program_finder_details_add_bookmark);
 	dismissDetailsButton = (Button)findViewById(R.id.program_finder_details_dismiss_details);
 	visitUrlButton = (Button)findViewById(R.id.program_finder_details_visit_link);
 
@@ -227,23 +224,12 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 	detailsView.setVisibility(View.VISIBLE);
 	detailsControls.setVisibility(View.VISIBLE);
 	
-	addBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		toggleBookmark(program);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
 		visitData(program);
 	    }
 	});
-	
-	if (((ApplicationController)getApplicationContext()).bookmarks.isBookmarked(program))
-	    addBookmarkButton.setText("Remove Bookmark");
-	else
-	    addBookmarkButton.setText("Add Bookmark");
     }
     
     private void visitData(final SmallBusinessProgram program) {
@@ -255,22 +241,6 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 	startActivity(intent);
     }
     
-    private void toggleBookmark(final SmallBusinessProgram program) {
-	ApplicationController app = (ApplicationController)getApplicationContext();
-	
-	if (app.bookmarks.isBookmarked(program)) {
-		app.bookmarks.removeBookmark(program);
-		addBookmarkButton.setText("Add Bookmark");
-		//Toast.makeText(ProgramFinderSearchResultsActivity.this, "Bookmark removed", Toast.LENGTH_SHORT).show();
-	}
-	else {
-		app.bookmarks.addBookmark(program);
-		addBookmarkButton.setText("Remove Bookmark");
-		//Toast.makeText(ProgramFinderSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-	}
-	app.saveBookmarks();
-    }
-
     private void removeInvalidResults() {
 	Iterator<SmallBusinessProgram> it = this.data.iterator();
 	while (it.hasNext()) {

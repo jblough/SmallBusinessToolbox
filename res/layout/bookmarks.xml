@@ -19,13 +19,6 @@
         android:layout_gravity="center"
         android:layout_weight="33"
         />
-    <Button android:id="@+id/bookmarks_details_remove_bookmark"
-        android:text="Remove Bookmark"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="33"
-        />
     <Button android:id="@+id/bookmarks_details_dismiss_details"
         android:text="Dismiss"
         android:layout_width="match_parent" 

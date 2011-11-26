@@ -24,13 +24,6 @@
         android:layout_gravity="center"
         android:layout_weight="33"
         />
-    <Button android:id="@+id/licenses_and_permits_details_add_bookmark"
-        android:text="Add Bookmark"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="34"
-        />
     <Button android:id="@+id/licenses_and_permits_details_dismiss_details"
         android:text="Dismiss"
         android:layout_width="match_parent" 

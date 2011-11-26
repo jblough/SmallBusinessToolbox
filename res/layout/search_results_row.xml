@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+
+  <ImageView android:id="@+id/search_result_row_bookmark"
+    android:src="@drawable/unbookmarked"
+    android:focusable="false"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingRight="5dp" />
+  
+  <TextView android:id="@+id/search_result_row_title"
+    android:text="Seller"
+    android:focusable="false"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_toLeftOf="@id/search_result_row_bookmark"
+    style="@style/SearchResulsTitleLabel" />
+
+  <TextView android:id="@+id/search_result_row_subtitle"
+    android:text="Paperback"
+    android:focusable="false"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@id/search_result_row_title"
+    android:layout_toLeftOf="@id/search_result_row_bookmark"
+    style="@style/SearchResulsSubTitleLabel" />
+  
+</RelativeLayout>

@@ -22,7 +22,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.SolicitationDataAdapter;
 import com.josephblough.sbt.callbacks.SolicitationsRetrieverCallback;
@@ -53,7 +52,6 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
     private TableRow statusRow;
     private TableRow closeDateRow;
     
-    private Button addBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -77,7 +75,6 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 	
 	detailsView = findViewById(R.id.solicitations_details_table);
 	detailsControls = findViewById(R.id.solicitations_details_controls);
-	addBookmarkButton = (Button)findViewById(R.id.solicitations_details_add_bookmark);
 	dismissDetailsButton = (Button)findViewById(R.id.solicitations_details_dismiss_details);
 	visitUrlButton = (Button)findViewById(R.id.solicitations_details_visit_link);
 
@@ -238,23 +235,12 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 	detailsView.setVisibility(View.VISIBLE);
 	detailsControls.setVisibility(View.VISIBLE);
 	
-	addBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		toggleBookmark(solicitation);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
 		visitData(solicitation);
 	    }
 	});
-	
-	if (((ApplicationController)getApplicationContext()).bookmarks.isBookmarked(solicitation))
-	    addBookmarkButton.setText("Remove Bookmark");
-	else
-	    addBookmarkButton.setText("Add Bookmark");
     }
     
     private void visitData(final Solicitation solicitation) {
@@ -264,22 +250,6 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 	// Launch the document
 	final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(solicitation.link));
 	startActivity(intent);
-    }
-    
-    private void toggleBookmark(final Solicitation solicitation) {
-	ApplicationController app = (ApplicationController)getApplicationContext();
-	
-	if (app.bookmarks.isBookmarked(solicitation)) {
-		app.bookmarks.removeBookmark(solicitation);
-		addBookmarkButton.setText("Add Bookmark");
-		//Toast.makeText(SolicitationsSearchResultsActivity.this, "Bookmark removed", Toast.LENGTH_SHORT).show();
-	}
-	else {
-		app.bookmarks.addBookmark(solicitation);
-		addBookmarkButton.setText("Remove Bookmark");
-		//Toast.makeText(SolicitationsSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-	}
-	app.saveBookmarks();
     }
     
     private void removeInvalidResults() {

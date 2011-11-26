@@ -30,7 +30,6 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
     private TextView rowLabel[] = new TextView[10];
     private TextView rowValue[] = new TextView[10];
 
-    private Button removeBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -106,7 +105,6 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	detailsView = findViewById(R.id.bookmarks_details_table);
 	detailsControls = findViewById(R.id.bookmarks_details_controls);
 	dismissDetailsButton = (Button)findViewById(R.id.bookmarks_details_dismiss_details);
-	removeBookmarkButton = (Button)findViewById(R.id.bookmarks_details_remove_bookmark);
 	visitUrlButton = (Button)findViewById(R.id.bookmarks_details_visit_link);
         
         row[0] = (TableRow)findViewById(R.id.bookmarks_details_row1);
@@ -206,12 +204,6 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	    }
 	}
 	
-	removeBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		removeBookmark(bookmark);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
@@ -244,7 +236,7 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	}
     }
 
-    private void removeBookmark(final Bookmarkable bookmark) {
+    public void removeBookmark(final Bookmarkable bookmark) {
 	// Close the details view
 	detailsView.setVisibility(View.GONE);
 	detailsControls.setVisibility(View.GONE);
@@ -252,7 +244,10 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	// Remove the bookmark
 	ApplicationController app = (ApplicationController)getApplicationContext();
 	bookmark.removeFromBookmarks(app);
+	app.saveBookmarks();
 
+	Toast.makeText(this, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
+	
 	// Refresh the adapter
 	updateAdapter();
     }

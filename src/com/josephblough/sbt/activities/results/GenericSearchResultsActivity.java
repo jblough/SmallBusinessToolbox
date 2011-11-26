@@ -21,7 +21,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.GenericPostDataAdapter;
 import com.josephblough.sbt.callbacks.GenericPostRetrieverCallback;
@@ -48,7 +47,6 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
     private TableRow closeDateRow;
     private TableRow daysToCloseRow;
     
-    private Button addBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -72,7 +70,6 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
 	
 	detailsView = findViewById(R.id.generic_details_table);
 	detailsControls = findViewById(R.id.generic_details_controls);
-	addBookmarkButton = (Button)findViewById(R.id.generic_details_add_bookmark);
 	dismissDetailsButton = (Button)findViewById(R.id.generic_details_dismiss_details);
 	visitUrlButton = (Button)findViewById(R.id.generic_details_visit_link);
 
@@ -206,23 +203,12 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
 	detailsView.setVisibility(View.VISIBLE);
 	detailsControls.setVisibility(View.VISIBLE);
 	
-	addBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		toggleBookmark(post);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
 		visitData(post);
 	    }
 	});
-	
-	if (((ApplicationController)getApplicationContext()).bookmarks.isBookmarked(post))
-	    addBookmarkButton.setText("Remove Bookmark");
-	else
-	    addBookmarkButton.setText("Add Bookmark");
     }
     
     private void visitData(final GenericPost post) {
@@ -234,22 +220,6 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
 	startActivity(intent);
     }
     
-    private void toggleBookmark(final GenericPost post) {
-	ApplicationController app = (ApplicationController)getApplicationContext();
-	
-	if (app.bookmarks.isBookmarked(post)) {
-		app.bookmarks.removeBookmark(post);
-		addBookmarkButton.setText("Add Bookmark");
-		//Toast.makeText(GenericSearchResultsActivity.this, "Bookmark removed", Toast.LENGTH_SHORT).show();
-	}
-	else {
-		app.bookmarks.addBookmark(post);
-		addBookmarkButton.setText("Remove Bookmark");
-		//Toast.makeText(GenericSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-	}
-	app.saveBookmarks();
-    }
-
     private void removeInvalidResults() {
 	Iterator<GenericPost> it = this.data.iterator();
 	while (it.hasNext()) {

@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.LicenseAndPermitDataAdapter;
 import com.josephblough.sbt.callbacks.LicensesAndPermitsRetrieverCallback;
@@ -56,7 +55,6 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
     private TableRow sectionRow;
     private TableRow resourceGroupDescriptionRow;
     
-    private Button addBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -78,7 +76,6 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	
 	detailsView = findViewById(R.id.licenses_and_permits_details_table);
 	detailsControls = findViewById(R.id.licenses_and_permits_details_controls);
-	addBookmarkButton = (Button)findViewById(R.id.licenses_and_permits_details_add_bookmark);
 	dismissDetailsButton = (Button)findViewById(R.id.licenses_and_permits_details_dismiss_details);
 	visitUrlButton = (Button)findViewById(R.id.licenses_and_permits_details_visit_link);
 
@@ -270,23 +267,12 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	detailsView.setVisibility(View.VISIBLE);
 	detailsControls.setVisibility(View.VISIBLE);
 	
-	addBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		toggleBookmark(licenseAndPermitData);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
 		visitData(licenseAndPermitData);
 	    }
 	});
-	
-	if (((ApplicationController)getApplicationContext()).bookmarks.isBookmarked(licenseAndPermitData))
-	    addBookmarkButton.setText("Remove Bookmark");
-	else
-	    addBookmarkButton.setText("Add Bookmark");
     }
     
     private void visitData(final LicenseAndPermitData licenseAndPermitData) {
@@ -298,22 +284,6 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	startActivity(intent);
     }
     
-    private void toggleBookmark(final LicenseAndPermitData licenseAndPermitData) {
-	ApplicationController app = (ApplicationController)getApplicationContext();
-	
-	if (app.bookmarks.isBookmarked(licenseAndPermitData)) {
-		app.bookmarks.removeBookmark(licenseAndPermitData);
-		addBookmarkButton.setText("Add Bookmark");
-		//Toast.makeText(LicensesAndPermitsSearchResultsActivity.this, "Bookmark removed", Toast.LENGTH_SHORT).show();
-	}
-	else {
-		app.bookmarks.addBookmark(licenseAndPermitData);
-		addBookmarkButton.setText("Remove Bookmark");
-		//Toast.makeText(LicensesAndPermitsSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-	}
-	app.saveBookmarks();
-    }
-
     private void removeInvalidResults(List<LicenseAndPermitData> results) {
 	Iterator<LicenseAndPermitData> it = results.iterator();
 	while (it.hasNext()) {

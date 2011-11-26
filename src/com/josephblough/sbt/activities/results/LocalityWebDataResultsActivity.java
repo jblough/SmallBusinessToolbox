@@ -19,7 +19,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.LocalityWebDataAdapter;
 import com.josephblough.sbt.callbacks.LocalityWebDataRetrieverCallback;
@@ -54,7 +53,6 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
     private TableRow featClassRow;
     private TableRow fipsClassRow;
     
-    private Button addBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -75,7 +73,6 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	
 	detailsView = findViewById(R.id.locality_web_data_details_table);
 	detailsControls = findViewById(R.id.locality_web_data_details_controls);
-	addBookmarkButton = (Button)findViewById(R.id.locality_web_data_details_add_bookmark);
 	dismissDetailsButton = (Button)findViewById(R.id.locality_web_data_details_dismiss_details);
 	visitUrlButton = (Button)findViewById(R.id.locality_web_data_details_visit_link);
 
@@ -251,23 +248,12 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	detailsView.setVisibility(View.VISIBLE);
 	detailsControls.setVisibility(View.VISIBLE);
 	
-	addBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		toggleBookmark(webData);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
 		visitData(webData);
 	    }
 	});
-	
-	if (((ApplicationController)getApplicationContext()).bookmarks.isBookmarked(webData))
-	    addBookmarkButton.setText("Remove Bookmark");
-	else
-	    addBookmarkButton.setText("Add Bookmark");
     }
     
     private void visitData(final LocalityWebData webData) {
@@ -279,28 +265,12 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	startActivity(intent);
     }
     
-    private void toggleBookmark(final LocalityWebData webData) {
-	ApplicationController app = (ApplicationController)getApplicationContext();
-	
-	if (app.bookmarks.isBookmarked(webData)) {
-		app.bookmarks.removeBookmark(webData);
-		addBookmarkButton.setText("Add Bookmark");
-		//Toast.makeText(LocalityWebDataResultsActivity.this, "Bookmark removed", Toast.LENGTH_SHORT).show();
-	}
-	else {
-		app.bookmarks.addBookmark(webData);
-		addBookmarkButton.setText("Remove Bookmark");
-		//Toast.makeText(LocalityWebDataResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-	}
-	app.saveBookmarks();
-    }
-
     private void removeInvalidResults() {
 	Iterator<LocalityWebData> it = this.data.iterator();
 	while (it.hasNext()) {
 	    LocalityWebData webData = it.next();
-	    if (webData.title == null || "".equals(webData.title) ||
-		    webData.url == null || "".equals(webData.url)) {
+	    if (webData.name == null || "".equals(webData.name) || "null".equals(webData.name) ||
+		    webData.url == null || "".equals(webData.url) || "null".equals(webData.url)) {
 		it.remove();
 	    }
 	}

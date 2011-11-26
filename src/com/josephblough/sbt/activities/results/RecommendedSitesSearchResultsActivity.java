@@ -19,7 +19,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.RecommendedSitesDataAdapter;
 import com.josephblough.sbt.callbacks.RecommendedSitesRetrieverCallback;
@@ -52,7 +51,6 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
     private TableRow ordersRow;
     private TableRow masterTermRow;
     
-    private Button addBookmarkButton;
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private View detailsView;
@@ -73,7 +71,6 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 	
 	detailsView = findViewById(R.id.recommended_sites_details_table);
 	detailsControls = findViewById(R.id.recommended_sites_details_controls);
-	addBookmarkButton = (Button)findViewById(R.id.recommended_sites_details_add_bookmark);
 	dismissDetailsButton = (Button)findViewById(R.id.recommended_sites_details_dismiss_details);
 	visitUrlButton = (Button)findViewById(R.id.recommended_sites_details_visit_link);
 
@@ -237,23 +234,12 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 	detailsView.setVisibility(View.VISIBLE);
 	detailsControls.setVisibility(View.VISIBLE);
 	
-	addBookmarkButton.setOnClickListener(new View.OnClickListener() {
-	    
-	    public void onClick(View v) {
-		toggleBookmark(site);
-	    }
-	});
 	visitUrlButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
 		visitData(site);
 	    }
 	});
-	
-	if (((ApplicationController)getApplicationContext()).bookmarks.isBookmarked(site))
-	    addBookmarkButton.setText("Remove Bookmark");
-	else
-	    addBookmarkButton.setText("Add Bookmark");
     }
     
     private void visitData(final RecommendedSite site) {
@@ -265,22 +251,6 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 	startActivity(intent);
     }
     
-    private void toggleBookmark(final RecommendedSite site) {
-	ApplicationController app = (ApplicationController)getApplicationContext();
-	
-	if (app.bookmarks.isBookmarked(site)) {
-		app.bookmarks.removeBookmark(site);
-		addBookmarkButton.setText("Add Bookmark");
-		//Toast.makeText(RecommendedSitesSearchResultsActivity.this, "Bookmark removed", Toast.LENGTH_SHORT).show();
-	}
-	else {
-		app.bookmarks.addBookmark(site);
-		addBookmarkButton.setText("Remove Bookmark");
-		//Toast.makeText(RecommendedSitesSearchResultsActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-	}
-	app.saveBookmarks();
-    }
-
     private void removeInvalidResults() {
 	Iterator<RecommendedSite> it = this.data.iterator();
 	while (it.hasNext()) {
