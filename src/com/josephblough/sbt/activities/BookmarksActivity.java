@@ -539,10 +539,11 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	
 	msg.append("<h6>" + bookmark.getName() + "</h6>");
 	for (int i=0; i<bookmark.getDetailCount(); i++) {
-	    if (bookmark.isVisible(i)) {
+	    if (bookmark.isVisible(i) && !"URL:".equals(bookmark.getDetailLabel(i))) {
 		msg.append("<b>" + bookmark.getDetailLabel(i) + "</b> " + bookmark.getDetailValue(i) + "<br/>");
 	    }
 	}
+	msg.append("<b>URL:</b> " + bookmark.getUrl() + "<br/>");
 	msg.append("<br/>");
 	
 	return msg.toString();
