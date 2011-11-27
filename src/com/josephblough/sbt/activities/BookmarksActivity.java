@@ -45,6 +45,7 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -122,9 +123,10 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.bookmarks_details_table);
-	detailsControls = findViewById(R.id.bookmarks_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.bookmarks_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.bookmarks_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
         
         row[0] = (TableRow)findViewById(R.id.bookmarks_details_row1);
         row[1] = (TableRow)findViewById(R.id.bookmarks_details_row2);
@@ -191,17 +193,21 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 		    int position, long id) {
 		Bookmarkable bookmark = (Bookmarkable)getListAdapter().getItem(position);
 		showDetails(bookmark);
-
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(bookmark.getName()).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, bookmark.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		share(bookmark);
+		
 		return true;
 	    }
 	});
     }
 
+    private void share(final Bookmarkable bookmark) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(bookmark.getName()).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, bookmark.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
+    }
+    
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	Bookmarkable bookmark = (Bookmarkable)getListAdapter().getItem(position);
 	
@@ -234,6 +240,13 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	    
 	    public void onClick(View v) {
 		visitData(bookmark);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(bookmark);
 	    }
 	});
 	

@@ -19,6 +19,13 @@
         android:layout_gravity="center"
         android:layout_weight="33"
         />
+    <Button android:id="@+id/district_office_details_share_link"
+        android:text="@string/share_link"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
     <Button android:id="@+id/district_office_details_dismiss_details"
         android:text="Dismiss"
         android:layout_width="match_parent" 

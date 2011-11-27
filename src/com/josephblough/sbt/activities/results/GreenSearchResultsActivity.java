@@ -42,6 +42,7 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -59,9 +60,10 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 	getListView().setOnItemClickListener(this);
 
 	detailsView = findViewById(R.id.green_details_table);
-	detailsControls = findViewById(R.id.green_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.green_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.green_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.green_details_title_value);
 	urlLabel = (TextView)findViewById(R.id.green_details_url_value);
@@ -89,15 +91,19 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 		
 		GreenPost post = ((GreenPostDataAdapter)getListAdapter()).getItem(position);
 		showDetails(post);
+		share(post);
 
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(post.title).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, post.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final GreenPost post) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(post.title).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, post.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<GreenPost> results) {
@@ -172,6 +178,13 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 	    
 	    public void onClick(View v) {
 		visitData(post);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(post);
 	    }
 	});
     }

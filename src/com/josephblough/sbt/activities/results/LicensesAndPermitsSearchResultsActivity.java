@@ -1,5 +1,6 @@
 package com.josephblough.sbt.activities.results;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -7,7 +8,6 @@ import java.util.List;
 
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.LicenseAndPermitDataAdapter;
-import com.josephblough.sbt.adapters.SeparatedListAdapter;
 import com.josephblough.sbt.callbacks.LicensesAndPermitsRetrieverCallback;
 import com.josephblough.sbt.criteria.LicensesAndPermitsSearchCriteria;
 import com.josephblough.sbt.data.LicenseAndPermitData;
@@ -57,6 +57,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
 
@@ -75,9 +76,10 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.licenses_and_permits_details_table);
-	detailsControls = findViewById(R.id.licenses_and_permits_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.licenses_and_permits_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.licenses_and_permits_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.licenses_and_permits_details_title_value);
 	descriptionLabel = (TextView)findViewById(R.id.licenses_and_permits_details_description_value);
@@ -120,17 +122,20 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 
 		LicenseAndPermitData licenseAndPermitData = (LicenseAndPermitData)getListAdapter().getItem(position);
 		showDetails(licenseAndPermitData);
-
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.getName()).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, licenseAndPermitData.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		share(licenseAndPermitData);
 		return true;
 	    }
 	});
     }
-/*
+
+    private void share(final LicenseAndPermitData licenseAndPermitData) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(licenseAndPermitData.getName()).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, licenseAndPermitData.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
+    }
+    
     public void success(LicenseAndPermitDataCollection results) {
 	this.data = results;
 	
@@ -142,12 +147,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	everything.addAll(data.localities);
 	
 	removeInvalidResults(everything);
-	Collections.sort(everything, new Comparator<LicenseAndPermitData>() {
-
-	    public int compare(LicenseAndPermitData data1, LicenseAndPermitData data2) {
-		return data1.getName().compareTo(data2.getName());
-	    }
-	});
+	Collections.sort(everything, new LicenseAndPermitDataComparator());
 
 	LicenseAndPermitDataAdapter adapter = new LicenseAndPermitDataAdapter(this, everything);
 	setListAdapter(adapter);
@@ -162,7 +162,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	else
 	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
     }
-*/
+/*
     public void success(LicenseAndPermitDataCollection results) {
 	this.data = results;
 
@@ -217,7 +217,7 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	else
 	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
     }
-
+*/
     public void error(String error) {
 	if (progress != null) {
 	    progress.dismiss();
@@ -326,6 +326,13 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	    
 	    public void onClick(View v) {
 		visitData(licenseAndPermitData);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(licenseAndPermitData);
 	    }
 	});
     }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/details_background"
+        >
+    <Button android:id="@+id/detail_controls_visit_link"
+        android:text="@string/visit_link"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    <Button android:id="@+id/detail_controls_share_link"
+        android:text="@string/share_link"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+    <Button android:id="@+id/detail_controls_dismiss_details"
+        android:text="Dismiss"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="33"
+        />
+</LinearLayout>

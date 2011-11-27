@@ -9,29 +9,10 @@
     android:layout_alignParentTop="true"
     layout="@layout/search_bar" />
 
-    <LinearLayout android:id="@+id/locality_web_data_details_controls"
-        android:visibility="gone"
-        android:orientation="horizontal"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:background="@color/details_background"
-        android:layout_alignParentBottom="true"
-        >
-    <Button android:id="@+id/locality_web_data_details_visit_link"
-        android:text="@string/visit_link"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="33"
-        />
-    <Button android:id="@+id/locality_web_data_details_dismiss_details"
-        android:text="Dismiss"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="33"
-        />
-    </LinearLayout>
+  <include android:id="@+id/detail_controls"
+    android:visibility="gone"
+    android:layout_alignParentBottom="true"
+    layout="@layout/detail_controls" />
 
     <TableLayout android:id="@+id/locality_web_data_details_table"
         android:stretchColumns="1"
@@ -41,7 +22,7 @@
         android:paddingTop="10dip"
         android:visibility="gone"
         android:background="@color/details_background"
-        android:layout_above="@id/locality_web_data_details_controls">
+        android:layout_above="@id/detail_controls">
         
         <TableRow android:id="@+id/locality_web_data_details_title_row">
             <TextView

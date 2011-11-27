@@ -54,6 +54,7 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -74,9 +75,10 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.solicitations_details_table);
-	detailsControls = findViewById(R.id.solicitations_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.solicitations_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.solicitations_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.solicitations_details_title_value);
 	descriptionLabel = (TextView)findViewById(R.id.solicitations_details_description_value);
@@ -114,15 +116,19 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 
 		Solicitation solicitation = ((SolicitationDataAdapter)getListAdapter()).getItem(position);
 		showDetails(solicitation);
+		share(solicitation);
 
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(solicitation.title).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, solicitation.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final Solicitation solicitation) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(solicitation.title).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, solicitation.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<Solicitation> results) {
@@ -239,6 +245,13 @@ public class SolicitationsSearchResultsActivity extends SearchResultsActivity im
 	    
 	    public void onClick(View v) {
 		visitData(solicitation);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(solicitation);
 	    }
 	});
     }

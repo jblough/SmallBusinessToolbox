@@ -53,6 +53,7 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -70,9 +71,10 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.recommended_sites_details_table);
-	detailsControls = findViewById(R.id.recommended_sites_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.recommended_sites_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.recommended_sites_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.recommended_sites_details_title_value);
 	descriptionLabel = (TextView)findViewById(R.id.recommended_sites_details_description_value);
@@ -112,15 +114,19 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 
 		RecommendedSite site = ((RecommendedSitesDataAdapter)getListAdapter()).getItem(position);
 		showDetails(site);
+		share(site);
 
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(site.title).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, site.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final RecommendedSite site) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(site.title).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, site.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<RecommendedSite> results) {
@@ -238,6 +244,13 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 	    
 	    public void onClick(View v) {
 		visitData(site);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(site);
 	    }
 	});
     }

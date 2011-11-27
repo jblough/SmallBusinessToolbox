@@ -51,6 +51,7 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -68,9 +69,10 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.program_finder_details_table);
-	detailsControls = findViewById(R.id.program_finder_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.program_finder_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.program_finder_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.program_finder_details_title_value);
 	descriptionLabel = (TextView)findViewById(R.id.program_finder_details_description_value);
@@ -108,15 +110,19 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 
 		SmallBusinessProgram program = ((SmallBusinessProgramDataAdapter)getListAdapter()).getItem(position);
 		showDetails(program);
-
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(program.title).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, program.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		share(program);
+		
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final SmallBusinessProgram program) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(program.title).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, program.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<SmallBusinessProgram> results) {
@@ -228,6 +234,13 @@ public class ProgramFinderSearchResultsActivity extends SearchResultsActivity im
 	    
 	    public void onClick(View v) {
 		visitData(program);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(program);
 	    }
 	});
     }

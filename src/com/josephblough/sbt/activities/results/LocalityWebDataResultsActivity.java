@@ -55,6 +55,7 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -72,9 +73,10 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.locality_web_data_details_table);
-	detailsControls = findViewById(R.id.locality_web_data_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.locality_web_data_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.locality_web_data_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.locality_web_data_details_title_value);
 	nameLabel = (TextView)findViewById(R.id.locality_web_data_details_name_value);
@@ -116,15 +118,18 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 
 		LocalityWebData webData = ((LocalityWebDataAdapter)getListAdapter()).getItem(position);
 		showDetails(webData);
-
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(webData.name).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, webData.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		share(webData);
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final LocalityWebData webData) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(webData.name).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, webData.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<LocalityWebData> results) {
@@ -252,6 +257,13 @@ public class LocalityWebDataResultsActivity extends SearchResultsActivity implem
 	    
 	    public void onClick(View v) {
 		visitData(webData);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(webData);
 	    }
 	});
     }

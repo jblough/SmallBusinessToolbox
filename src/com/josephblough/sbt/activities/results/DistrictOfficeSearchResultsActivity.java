@@ -48,6 +48,7 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
     
     private Button dismissDetailsButton;
     private Button mapAddressButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -68,6 +69,7 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 	detailsControls = findViewById(R.id.district_office_details_controls);
 	dismissDetailsButton = (Button)findViewById(R.id.district_office_details_dismiss_details);
 	mapAddressButton = (Button)findViewById(R.id.district_office_details_map_site);
+	shareUrlButton = (Button)findViewById(R.id.district_office_details_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.district_office_details_title_value);
 	nameLabel = (TextView)findViewById(R.id.district_office_details_name_value);
@@ -99,15 +101,19 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 		    int position, long id) {
 		SbaDistrictOffice office = ((DistrictOfficeDataAdapter)getListAdapter()).getItem(position);
 		showDetails(office);
+		share(office);
 
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(office.name).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, office.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final SbaDistrictOffice office) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(office.name).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, office.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<SbaDistrictOffice> results) {
@@ -204,6 +210,13 @@ public class DistrictOfficeSearchResultsActivity extends ListActivity implements
 	    
 	    public void onClick(View v) {
 		mapAddress(office);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(office);
 	    }
 	});
     }

@@ -67,6 +67,7 @@ public class LoansAndGrantsSearchResultsActivity extends SearchResultsActivity i
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -84,9 +85,10 @@ public class LoansAndGrantsSearchResultsActivity extends SearchResultsActivity i
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.loans_and_grants_details_table);
-	detailsControls = findViewById(R.id.loans_and_grants_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.loans_and_grants_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.loans_and_grants_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.loans_and_grants_details_title_value);
 	descriptionLabel = (TextView)findViewById(R.id.loans_and_grants_details_description_value);
@@ -141,15 +143,19 @@ public class LoansAndGrantsSearchResultsActivity extends SearchResultsActivity i
 
 		LoanAndGrantData loanAndGrantData = ((LoanAndGrantDataAdapter)getListAdapter()).getItem(position);
 		showDetails(loanAndGrantData);
+		share(loanAndGrantData);
 
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(loanAndGrantData.title).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, loanAndGrantData.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
 		return true;
 	    }
 	});
+    }
+    
+    private void share(final LoanAndGrantData loanAndGrantData) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(loanAndGrantData.title).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, loanAndGrantData.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<LoanAndGrantData> results) {
@@ -287,6 +293,13 @@ public class LoansAndGrantsSearchResultsActivity extends SearchResultsActivity i
 	    
 	    public void onClick(View v) {
 		visitData(loanAndGrantData);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(loanAndGrantData);
 	    }
 	});
     }

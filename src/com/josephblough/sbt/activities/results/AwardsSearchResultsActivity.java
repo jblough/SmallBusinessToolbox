@@ -57,6 +57,7 @@ public class AwardsSearchResultsActivity extends SearchResultsActivity implement
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
+    private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
     
@@ -74,9 +75,10 @@ public class AwardsSearchResultsActivity extends SearchResultsActivity implement
 	getListView().setOnItemClickListener(this);
 	
 	detailsView = findViewById(R.id.awards_details_table);
-	detailsControls = findViewById(R.id.awards_details_controls);
-	dismissDetailsButton = (Button)findViewById(R.id.awards_details_dismiss_details);
-	visitUrlButton = (Button)findViewById(R.id.awards_details_visit_link);
+	detailsControls = findViewById(R.id.detail_controls);
+	dismissDetailsButton = (Button)findViewById(R.id.detail_controls_dismiss_details);
+	visitUrlButton = (Button)findViewById(R.id.detail_controls_visit_link);
+	shareUrlButton = (Button)findViewById(R.id.detail_controls_share_link);
 
 	titleLabel = (TextView)findViewById(R.id.awards_details_title_value);
 	urlLabel = (TextView)findViewById(R.id.awards_details_url_value);
@@ -120,15 +122,19 @@ public class AwardsSearchResultsActivity extends SearchResultsActivity implement
 		
 		Award award = ((AwardDataAdapter)getListAdapter()).getItem(position);
 		showDetails(award);
-
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(award.title).toString());
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, award.formatForSharing());
-		startActivity(Intent.createChooser(sharingIntent,"Share using"));
+		share(award);
+		
 		return true;
 	    }
 	});
+    }
+    
+    public void share(final Award award) {
+	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	sharingIntent.setType("text/plain");
+	sharingIntent.putExtra(Intent.EXTRA_SUBJECT, Html.fromHtml(award.title).toString());
+	sharingIntent.putExtra(Intent.EXTRA_TEXT, award.formatForSharing());
+	startActivity(Intent.createChooser(sharingIntent,"Share using"));
     }
     
     public void success(List<Award> results) {
@@ -262,6 +268,13 @@ public class AwardsSearchResultsActivity extends SearchResultsActivity implement
 	    
 	    public void onClick(View v) {
 		visitData(award);
+	    }
+	});
+	
+	shareUrlButton.setOnClickListener(new View.OnClickListener() {
+	    
+	    public void onClick(View v) {
+		share(award);
 	    }
 	});
     }
