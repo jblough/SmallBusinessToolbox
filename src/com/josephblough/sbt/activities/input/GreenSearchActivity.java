@@ -228,11 +228,11 @@ public class GreenSearchActivity extends Activity implements OnEditorActionListe
 		builder.show();
 	    }
 	    else {
-		Toast.makeText(this, "No searches have been saved", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, R.string.no_saved_searches, Toast.LENGTH_SHORT).show();
 	    }
 	}
 	else {
-	    Toast.makeText(this, "No searches have been saved", Toast.LENGTH_LONG).show();
+	    Toast.makeText(this, R.string.no_saved_searches, Toast.LENGTH_SHORT).show();
 	}
     }
     
@@ -327,11 +327,11 @@ public class GreenSearchActivity extends Activity implements OnEditorActionListe
 		builder.show();
 	    }
 	    else {
-		Toast.makeText(this, "No searches have been saved", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, R.string.no_saved_searches, Toast.LENGTH_SHORT).show();
 	    }
 	}
 	else {
-	    Toast.makeText(this, "No searches have been saved", Toast.LENGTH_LONG).show();
+	    Toast.makeText(this, R.string.no_saved_searches, Toast.LENGTH_SHORT).show();
 	}
     }
 }

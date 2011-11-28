@@ -1,9 +1,26 @@
 package com.josephblough.sbt.criteria;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class SolicitationsSearchCriteria implements Parcelable {
+
+    private final static String TAG = "SolicitationsSearchCriteria";
+    
+    private final static String SEARCHES_JSON_ARRAY = "searches";
+    private final static String NAME_JSON_ELEMENT = "name";
+    private final static String KEYWORD_JSON_ELEMENT = "keyword";
+    private final static String AGENCY_JSON_ELEMENT = "agency";
+    private final static String FILTER_JSON_ELEMENT = "filter";
 
     public static final int SHOW_ALL_INDEX = 0;
     public static final int SHOW_OPEN_INDEX = 1;
@@ -43,5 +60,56 @@ public class SolicitationsSearchCriteria implements Parcelable {
 	keyword = in.readString();
 	agency = in.readString();
 	filter = in.readInt();
+    }
+    
+    public static Map<String, SolicitationsSearchCriteria> convertFromJson(final String jsonString) {
+	Map<String, SolicitationsSearchCriteria> searches = new HashMap<String, SolicitationsSearchCriteria>();
+	if (jsonString != null && !"".equals(jsonString)) {
+	    try {
+		JSONObject json = new JSONObject(jsonString);
+		JSONArray jsonSearches = json.optJSONArray(SEARCHES_JSON_ARRAY);
+		if (jsonSearches != null) {
+		    int length = jsonSearches.length();
+		    for (int i=0; i<length; i++) {
+			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
+			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
+			String keyword = jsonSearch.getString(KEYWORD_JSON_ELEMENT);
+			String agency = jsonSearch.optString(AGENCY_JSON_ELEMENT);
+			if ("".equals(agency))
+			    agency = null;
+			int filter = jsonSearch.getInt(FILTER_JSON_ELEMENT);
+			SolicitationsSearchCriteria search = new SolicitationsSearchCriteria(keyword, agency, filter);
+			searches.put(name, search);
+		    }
+		}
+	    }
+	    catch (JSONException e) {
+		Log.e(TAG, e.getMessage(), e);
+	    }
+	}
+
+	return searches;
+    }
+    
+    public static String convertToJson(final Map<String, SolicitationsSearchCriteria> criteria) {
+	JSONObject json = new JSONObject();
+	try {
+	    JSONArray jsonSearches = new JSONArray();
+	    for (Entry<String, SolicitationsSearchCriteria> entry : criteria.entrySet()) {
+		JSONObject jsonSearch = new JSONObject();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
+		SolicitationsSearchCriteria search = entry.getValue();
+		jsonSearch.put(KEYWORD_JSON_ELEMENT, search.keyword);
+		jsonSearch.put(AGENCY_JSON_ELEMENT, (search.agency == null) ? "" : search.agency);
+		jsonSearch.put(FILTER_JSON_ELEMENT, search.filter);
+
+		jsonSearches.put(jsonSearch);
+	    }
+	    json.put(SEARCHES_JSON_ARRAY, jsonSearches);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json.toString();
     }
 }

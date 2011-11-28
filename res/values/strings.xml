@@ -11,4 +11,5 @@
     <string name="share_link">Share</string>
     <string name="map_address">Map Address</string>
     <string name="email_bookmarks">Email bookmarks</string>
+    <string name="no_saved_searches">No searches have been saved</string>
 </resources>

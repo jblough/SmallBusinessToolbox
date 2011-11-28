@@ -1,9 +1,25 @@
 package com.josephblough.sbt.criteria;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class ProgramFinderSearchCriteria implements Parcelable {
+
+    private final static String TAG = "ProgramFinderSearchCriteria";
+    
+    private final static String SEARCHES_JSON_ARRAY = "searches";
+    private final static String NAME_JSON_ELEMENT = "name";
+    private final static String TYPE_JSON_ELEMENT = "type";
+    private final static String CRITERIA_JSON_ELEMENT = "criteria";
 
     public static final int TYPE_BY_FEDERAL_INDEX = 0;
     public static final int TYPE_BY_PRIVATE_INDEX = 1;
@@ -51,5 +67,52 @@ public class ProgramFinderSearchCriteria implements Parcelable {
     private ProgramFinderSearchCriteria(Parcel in) {
 	type = in.readInt();
 	criteria = in.readString();
+    }
+    
+    public static Map<String, ProgramFinderSearchCriteria> convertFromJson(final String jsonString) {
+	Map<String, ProgramFinderSearchCriteria> searches = new HashMap<String, ProgramFinderSearchCriteria>();
+	if (jsonString != null && !"".equals(jsonString)) {
+	    try {
+		JSONObject json = new JSONObject(jsonString);
+		JSONArray jsonSearches = json.optJSONArray(SEARCHES_JSON_ARRAY);
+		if (jsonSearches != null) {
+		    int length = jsonSearches.length();
+		    for (int i=0; i<length; i++) {
+			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
+			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
+			int type = jsonSearch.getInt(TYPE_JSON_ELEMENT);
+			String criteria = jsonSearch.getString(CRITERIA_JSON_ELEMENT);
+			ProgramFinderSearchCriteria search = new ProgramFinderSearchCriteria(type, criteria);
+			searches.put(name, search);
+		    }
+		}
+	    }
+	    catch (JSONException e) {
+		Log.e(TAG, e.getMessage(), e);
+	    }
+	}
+
+	return searches;
+    }
+    
+    public static String convertToJson(final Map<String, ProgramFinderSearchCriteria> criteria) {
+	JSONObject json = new JSONObject();
+	try {
+	    JSONArray jsonSearches = new JSONArray();
+	    for (Entry<String, ProgramFinderSearchCriteria> entry : criteria.entrySet()) {
+		JSONObject jsonSearch = new JSONObject();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
+		ProgramFinderSearchCriteria search = entry.getValue();
+		jsonSearch.put(TYPE_JSON_ELEMENT, search.type);
+		jsonSearch.put(CRITERIA_JSON_ELEMENT, search.criteria);
+
+		jsonSearches.put(jsonSearch);
+	    }
+	    json.put(SEARCHES_JSON_ARRAY, jsonSearches);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json.toString();
     }
 }
