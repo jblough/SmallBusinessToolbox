@@ -9,4 +9,5 @@
     android:horizontalSpacing="5dp"
     android:stretchMode="columnWidth"
     android:minHeight="150dp"
-    android:gravity="center"/>
+    android:gravity="center"
+    android:background="@drawable/background_repeat"/>
