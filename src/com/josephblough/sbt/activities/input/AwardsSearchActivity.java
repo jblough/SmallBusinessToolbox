@@ -44,8 +44,6 @@ public class AwardsSearchActivity extends Activity implements OnEditorActionList
 
     private final static String SEARCHES_PREFERENCE_KEY = "Searches";
     
-    private String lastSearchName;
-    
     private CheckBox downloadAllCheckBox;
     private EditText searchTermField;
     private CheckBox agencyCheckBox;
@@ -301,50 +299,42 @@ public class AwardsSearchActivity extends Activity implements OnEditorActionList
     }
     
     private void saveSearch() {
-	//if (!"".equals(searchTermField.getText().toString())) {
-	    
-	    // see http://androidsnippets.com/prompt-user-input-with-an-alertdialog
-	    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Save Search");
+	// see http://androidsnippets.com/prompt-user-input-with-an-alertdialog
+	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	builder.setTitle("Save Search");
 
-	    // Set an EditText view to get user input 
-	    final EditText input = new EditText(this);
-	    if (lastSearchName != null)
-		input.setText(lastSearchName);
-	    builder.setView(input);
+	// Set an EditText view to get user input 
+	final EditText input = new EditText(this);
+	builder.setView(input);
 
-	    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		    String value = input.getText().toString();
-		    if (!"".equals(value)) {
-			// Load the saved searches
-			final SharedPreferences prefs = getSharedPreferences(AwardsSearchActivity.TAG, 0);
-			final Map<String, AwardsSearchCriteria> searches = (prefs.contains(SEARCHES_PREFERENCE_KEY)) ? 
-				AwardsSearchCriteria.convertFromJson(prefs.getString(SEARCHES_PREFERENCE_KEY, null)) : new HashMap<String, AwardsSearchCriteria>();
+	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	    public void onClick(DialogInterface dialog, int whichButton) {
+		String value = input.getText().toString();
+		if (!"".equals(value)) {
+		    // Load the saved searches
+		    final SharedPreferences prefs = getSharedPreferences(AwardsSearchActivity.TAG, 0);
+		    final Map<String, AwardsSearchCriteria> searches = (prefs.contains(SEARCHES_PREFERENCE_KEY)) ? 
+			    AwardsSearchCriteria.convertFromJson(prefs.getString(SEARCHES_PREFERENCE_KEY, null)) : new HashMap<String, AwardsSearchCriteria>();
 
-			// Add the current search
-			searches.put(value, createCriteria());
+			    // Add the current search
+			    searches.put(value, createCriteria());
 
-			// Save the searches
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.putString(SEARCHES_PREFERENCE_KEY, AwardsSearchCriteria.convertToJson(searches));
-			editor.commit();
-		    }
+			    // Save the searches
+			    SharedPreferences.Editor editor = prefs.edit();
+			    editor.putString(SEARCHES_PREFERENCE_KEY, AwardsSearchCriteria.convertToJson(searches));
+			    editor.commit();
 		}
-	    });
+	    }
+	});
 
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		    // Canceled.
-		    dialog.cancel();
-		}
-	    });
+	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	    public void onClick(DialogInterface dialog, int whichButton) {
+		// Canceled.
+		dialog.cancel();
+	    }
+	});
 
-	    builder.show();
-	/*}
-	else {
-	    Toast.makeText(this, "No search terms to save", Toast.LENGTH_LONG).show();
-	}*/
+	builder.show();
     }
     
     private void deleteSearches() {

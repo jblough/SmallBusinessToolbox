@@ -250,12 +250,21 @@ public class ApplicationController extends Application {
 	Patents - patent 
 	Science & Technology R&D data -	science_accelerator	 
 	*/
+	// Readable names to parameters
 	searchTypeMap.put("Grants", "grants");
 	searchTypeMap.put("Solicitations", "presolicitation");
 	searchTypeMap.put("Challenges", "challenges");
 	searchTypeMap.put("Research & Development", "randd");
 	searchTypeMap.put("Patents", "patent");
 	searchTypeMap.put("Science & Technology R&D data", "science_accelerator");
+
+	// Parameters to readable names
+	searchTypeMap.put("grants", "Grants");
+	searchTypeMap.put("presolicitation", "Solicitations");
+	searchTypeMap.put("challenges", "Challenges");
+	searchTypeMap.put("randd", "Research & Development");
+	searchTypeMap.put("patent", "Patents");
+	searchTypeMap.put("science_accelerator", "Science & Technology R&D data");
     }    
     
     public void preselectCurrentState(final Spinner stateSpinner) {
