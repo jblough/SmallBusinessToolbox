@@ -1,10 +1,30 @@
 package com.josephblough.sbt.criteria;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class AwardsSearchCriteria implements Parcelable {
 
+    private final static String TAG = "AwardsSearchCriteria";
+    
+    private final static String SEARCHES_JSON_ARRAY = "searches";
+    private final static String NAME_JSON_ELEMENT = "name";
+    private final static String DOWLOAD_ALL_JSON_ELEMENT = "download_all";
+    private final static String SEARCH_TERM_JSON_ELEMENT = "search_term";
+    private final static String AGENCY_JSON_ELEMENT = "agency";
+    private final static String COMPANY_JSON_ELEMENT = "company";
+    private final static String INSTITUTION_JSON_ELEMENT = "institution";
+    private final static String YEAR_JSON_ELEMENT = "year";
+    
     public boolean downloadAll;
     public String searchTerm;
     public String agency;
@@ -51,5 +71,61 @@ public class AwardsSearchCriteria implements Parcelable {
 	company = in.readString();
 	institution = in.readString();
 	year = in.readInt();
+    }
+    
+    public static Map<String, AwardsSearchCriteria> convertFromJson(final String jsonString) {
+	Map<String, AwardsSearchCriteria> searches = new HashMap<String, AwardsSearchCriteria>();
+	
+	if (jsonString != null && !"".equals(jsonString)) {
+	    try {
+		JSONObject json = new JSONObject(jsonString);
+		JSONArray jsonSearches = json.optJSONArray(SEARCHES_JSON_ARRAY);
+		if (jsonSearches != null) {
+		    int length = jsonSearches.length();
+		    for (int i=0; i<length; i++) {
+			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
+			boolean downloadAll = jsonSearch.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
+			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
+			String searchTerm = jsonSearch.getString(SEARCH_TERM_JSON_ELEMENT);
+			String agency = jsonSearch.getString(AGENCY_JSON_ELEMENT);
+			String company = jsonSearch.getString(COMPANY_JSON_ELEMENT);
+			String institution = jsonSearch.getString(INSTITUTION_JSON_ELEMENT);
+			int year = jsonSearch.optInt(YEAR_JSON_ELEMENT, 0);
+			AwardsSearchCriteria search = new AwardsSearchCriteria(downloadAll, searchTerm, agency, company, institution, year);
+			searches.put(name, search);
+		    }
+		}
+	    }
+	    catch (JSONException e) {
+		Log.e(TAG, e.getMessage(), e);
+	    }
+	}
+
+	return searches;
+    }
+    
+    public static String convertToJson(final Map<String, AwardsSearchCriteria> criteria) {
+	JSONObject json = new JSONObject();
+	try {
+	    JSONArray jsonSearches = new JSONArray();
+	    for (Entry<String, AwardsSearchCriteria> entry : criteria.entrySet()) {
+		JSONObject jsonSearch = new JSONObject();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
+		AwardsSearchCriteria search = entry.getValue();
+		jsonSearch.put(DOWLOAD_ALL_JSON_ELEMENT, search.downloadAll);
+		jsonSearch.put(SEARCH_TERM_JSON_ELEMENT, search.searchTerm);
+		jsonSearch.put(AGENCY_JSON_ELEMENT, search.agency);
+		jsonSearch.put(COMPANY_JSON_ELEMENT, search.company);
+		jsonSearch.put(INSTITUTION_JSON_ELEMENT, search.institution);
+		jsonSearch.put(YEAR_JSON_ELEMENT, search.year);
+
+		jsonSearches.put(jsonSearch);
+	    }
+	    json.put(SEARCHES_JSON_ARRAY, jsonSearches);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json.toString();
     }
 }

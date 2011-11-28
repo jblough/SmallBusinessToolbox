@@ -214,6 +214,7 @@ public class ApplicationController extends Application {
     }
 
     private void initAgencyMap() {
+	// Full names to abbreviations
 	agencyLookupMap.put("Dept. of Defense", "DOD");
 	agencyLookupMap.put("Dept. of Health and Human Services", "HHS");
 	agencyLookupMap.put("National Aeronautics and Space Administration", "NASA");
@@ -225,6 +226,19 @@ public class ApplicationController extends Application {
 	agencyLookupMap.put("Dept. of Education", "ED");
 	agencyLookupMap.put("Dept. of Transportation", "DOT");
 	agencyLookupMap.put("Dept. of Homeland Security", "DHS");
+	
+	// Abbreviations to full names
+	agencyLookupMap.put("DOD", "Dept. of Defense");
+	agencyLookupMap.put("HHS", "Dept. of Health and Human Services");
+	agencyLookupMap.put("NASA", "National Aeronautics and Space Administration");
+	agencyLookupMap.put("NSF", "National Science Foundation");
+	agencyLookupMap.put("DOE", "Dept. of Energy");
+	agencyLookupMap.put("USDA", "United States Dept. of Agriculture");
+	agencyLookupMap.put("EPA", "Environmental Protection Agency");
+	agencyLookupMap.put("DOC", "Dept. of Commerce");
+	agencyLookupMap.put("ED", "Dept. of Education");
+	agencyLookupMap.put("DOT", "Dept. of Transportation");
+	agencyLookupMap.put("DHS", "Dept. of Homeland Security");
     }
 
     private void initSearchTypeMap() {
