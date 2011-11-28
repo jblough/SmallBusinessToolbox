@@ -20,7 +20,7 @@ public class ApplicationController extends Application {
 
     public final Map<String, String> stateLookupMap = new HashMap<String, String>();
     public final Map<String, String> agencyLookupMap = new HashMap<String, String>();
-    private final Map<String, Integer> stateIndexArrayLookupMap = new HashMap<String, Integer>();
+    public final Map<String, Integer> stateIndexArrayLookupMap = new HashMap<String, Integer>();
     public final Map<String, String> searchTypeMap = new HashMap<String, String>();
     
     public Location location = null;
