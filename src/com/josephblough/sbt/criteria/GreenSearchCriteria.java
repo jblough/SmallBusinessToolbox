@@ -62,6 +62,7 @@ public class GreenSearchCriteria implements Parcelable {
 	agency = in.readString();
 	type = in.readString();
     }
+    
     public static Map<String, GreenSearchCriteria> convertFromJson(final String jsonString) {
 	Map<String, GreenSearchCriteria> searches = new HashMap<String, GreenSearchCriteria>();
 	
