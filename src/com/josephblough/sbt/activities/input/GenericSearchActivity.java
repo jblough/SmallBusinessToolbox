@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
+import com.josephblough.sbt.activities.ShortcutActivity;
 import com.josephblough.sbt.activities.results.GenericSearchResultsActivity;
 import com.josephblough.sbt.criteria.GenericSearchCriteria;
 
@@ -60,6 +61,8 @@ public class GenericSearchActivity extends Activity implements OnEditorActionLis
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.generic_search_criteria);
 
+        final boolean creatingLauncher = getIntent().getBooleanExtra(ShortcutActivity.CREATE_LAUNCHER_KEY, false);
+        
 	downloadAllCheckBox = (CheckBox)findViewById(R.id.generic_download_all_checkbox);
 	inputFieldWrapper = (LinearLayout)findViewById(R.id.generic_input_wrapper);
 	searchTermField = (EditText)findViewById(R.id.generic_search_term_field);
@@ -102,10 +105,24 @@ public class GenericSearchActivity extends Activity implements OnEditorActionLis
 	    }
 	});
 	
-	((Button)findViewById(R.id.generic_search_button)).setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button)findViewById(R.id.generic_search_button);
+	if (creatingLauncher) {
+	    searchButton.setText("Create Launcher");
+	}
+	
+        searchButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
-		search();
+		if (creatingLauncher) {
+		    Intent data = new Intent();
+		    data.putExtra(ShortcutActivity.SEARCH_TYPE, ShortcutActivity.GENERIC_INDEX);
+		    data.putExtra(ShortcutActivity.CRITERIA, createCriteria().toJson().toString());
+		    setResult(RESULT_OK, data);
+		    finish();
+		}
+		else {
+		    search();
+		}
 	    }
 	});
     }

@@ -80,9 +80,7 @@ public class ProgramFinderSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			int type = jsonSearch.getInt(TYPE_JSON_ELEMENT);
-			String criteria = jsonSearch.getString(CRITERIA_JSON_ELEMENT);
-			ProgramFinderSearchCriteria search = new ProgramFinderSearchCriteria(type, criteria);
+			ProgramFinderSearchCriteria search = new ProgramFinderSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -100,11 +98,9 @@ public class ProgramFinderSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, ProgramFinderSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		ProgramFinderSearchCriteria search = entry.getValue();
-		jsonSearch.put(TYPE_JSON_ELEMENT, search.type);
-		jsonSearch.put(CRITERIA_JSON_ELEMENT, search.criteria);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -114,5 +110,31 @@ public class ProgramFinderSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public ProgramFinderSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public ProgramFinderSearchCriteria(final JSONObject json) {
+	try {
+	    type = json.getInt(TYPE_JSON_ELEMENT);
+	    criteria = json.getString(CRITERIA_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(TYPE_JSON_ELEMENT, type);
+	    json.put(CRITERIA_JSON_ELEMENT, criteria);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

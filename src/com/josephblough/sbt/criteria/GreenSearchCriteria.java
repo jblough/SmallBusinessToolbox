@@ -75,11 +75,7 @@ public class GreenSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			boolean downloadAll = jsonSearch.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
-			String searchTerm = jsonSearch.getString(SEARCH_TERM_JSON_ELEMENT);
-			String agency = jsonSearch.getString(AGENCY_JSON_ELEMENT);
-			String type = jsonSearch.getString(TYPE_JSON_ELEMENT);
-			GreenSearchCriteria search = new GreenSearchCriteria(downloadAll, searchTerm, agency, type);
+			GreenSearchCriteria search = new GreenSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -97,13 +93,9 @@ public class GreenSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, GreenSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		GreenSearchCriteria search = entry.getValue();
-		jsonSearch.put(DOWLOAD_ALL_JSON_ELEMENT, search.downloadAll);
-		jsonSearch.put(SEARCH_TERM_JSON_ELEMENT, search.searchTerm);
-		jsonSearch.put(AGENCY_JSON_ELEMENT, search.agency);
-		jsonSearch.put(TYPE_JSON_ELEMENT, search.type);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -113,5 +105,35 @@ public class GreenSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public GreenSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public GreenSearchCriteria(final JSONObject json) {
+	try {
+	    downloadAll = json.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
+	    searchTerm = json.getString(SEARCH_TERM_JSON_ELEMENT);
+	    agency = json.getString(AGENCY_JSON_ELEMENT);
+	    type = json.getString(TYPE_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(DOWLOAD_ALL_JSON_ELEMENT, downloadAll);
+	    json.put(SEARCH_TERM_JSON_ELEMENT, searchTerm);
+	    json.put(AGENCY_JSON_ELEMENT, agency);
+	    json.put(TYPE_JSON_ELEMENT, type);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

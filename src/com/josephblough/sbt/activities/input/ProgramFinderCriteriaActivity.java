@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
+import com.josephblough.sbt.activities.ShortcutActivity;
 import com.josephblough.sbt.activities.results.ProgramFinderSearchResultsActivity;
 import com.josephblough.sbt.criteria.ProgramFinderSearchCriteria;
 
@@ -50,6 +51,8 @@ public class ProgramFinderCriteriaActivity extends Activity {
 	super.onCreate(savedInstanceState);
         setContentView(R.layout.program_finder_search_criteria);
         
+        final boolean creatingLauncher = getIntent().getBooleanExtra(ShortcutActivity.CREATE_LAUNCHER_KEY, false);
+        
         typeSpinner = (Spinner)findViewById(R.id.program_finder_type_spinner);
         criteriaLabel = (TextView)findViewById(R.id.program_finder_criteria_label);
         criteriaSpinner = (Spinner)findViewById(R.id.program_finder_criteria_spinner);
@@ -65,10 +68,24 @@ public class ProgramFinderCriteriaActivity extends Activity {
 	    }
 	});
         
-        ((Button)findViewById(R.id.program_finder_search_button)).setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button)findViewById(R.id.program_finder_search_button);
+	if (creatingLauncher) {
+	    searchButton.setText("Create Launcher");
+	}
+	
+        searchButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
-		search();
+		if (creatingLauncher) {
+		    Intent data = new Intent();
+		    data.putExtra(ShortcutActivity.SEARCH_TYPE, ShortcutActivity.PROGRAM_FINDER_INDEX);
+		    data.putExtra(ShortcutActivity.CRITERIA, createCriteria().toJson().toString());
+		    setResult(RESULT_OK, data);
+		    finish();
+		}
+		else {
+		    search();
+		}
 	    }
 	});
     }

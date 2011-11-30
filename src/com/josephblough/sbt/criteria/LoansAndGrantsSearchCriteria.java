@@ -101,19 +101,7 @@ public class LoansAndGrantsSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			boolean includeFederal = jsonSearch.getBoolean(INCLUDE_FEDERAL_JSON_ELEMENT);
-			boolean includeState = jsonSearch.getBoolean(INCLUDE_STATE_JSON_ELEMENT);
-			String state = jsonSearch.getString(STATE_JSON_ELEMENT);
-			boolean filterByIndustry = jsonSearch.getBoolean(FILTER_BY_INDUSTRY_JSON_ELEMENT);
-			String industry = jsonSearch.getString(INDUSTRY_JSON_ELEMENT);
-			boolean filteryBySpecialty = jsonSearch.getBoolean(FILTER_BY_SPECIALTY_JSON_ELEMENT);
-			JSONArray jsonSpecialties = jsonSearch.getJSONArray(SPECIALTIES_JSON_ARRAY);
-			List<String> specialties = new ArrayList<String>();
-			for (int j=0; j<jsonSpecialties.length(); j++) {
-			    specialties.add(jsonSpecialties.getString(j));
-			}
-			LoansAndGrantsSearchCriteria search = 
-				new LoansAndGrantsSearchCriteria(includeFederal, includeState, state, filterByIndustry, industry, filteryBySpecialty, specialties);
+			LoansAndGrantsSearchCriteria search = new LoansAndGrantsSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -131,20 +119,9 @@ public class LoansAndGrantsSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, LoansAndGrantsSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		LoansAndGrantsSearchCriteria search = entry.getValue();
-		jsonSearch.put(INCLUDE_FEDERAL_JSON_ELEMENT, search.includeFederal);
-		jsonSearch.put(INCLUDE_STATE_JSON_ELEMENT, search.includeState);
-		jsonSearch.put(STATE_JSON_ELEMENT, search.state);
-		jsonSearch.put(FILTER_BY_INDUSTRY_JSON_ELEMENT, search.filterByIndustry);
-		jsonSearch.put(INDUSTRY_JSON_ELEMENT, search.industry);
-		jsonSearch.put(FILTER_BY_SPECIALTY_JSON_ELEMENT, search.filterBySpecialty);
-		JSONArray jsonSpecialties = new JSONArray();
-		for (String specialty : search.specialties) {
-		    jsonSpecialties.put(specialty);
-		}
-		jsonSearch.put(SPECIALTIES_JSON_ARRAY, jsonSpecialties);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -154,5 +131,49 @@ public class LoansAndGrantsSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+
+    public LoansAndGrantsSearchCriteria(final String json) throws JSONException {
+	this(new JSONObject(json));
+    }
+    
+    public LoansAndGrantsSearchCriteria(final JSONObject json) {
+	try {
+	    includeFederal = json.getBoolean(INCLUDE_FEDERAL_JSON_ELEMENT);
+	    includeState = json.getBoolean(INCLUDE_STATE_JSON_ELEMENT);
+	    state = json.getString(STATE_JSON_ELEMENT);
+	    filterByIndustry = json.getBoolean(FILTER_BY_INDUSTRY_JSON_ELEMENT);
+	    industry = json.getString(INDUSTRY_JSON_ELEMENT);
+	    filterBySpecialty = json.getBoolean(FILTER_BY_SPECIALTY_JSON_ELEMENT);
+	    JSONArray jsonSpecialties = json.getJSONArray(SPECIALTIES_JSON_ARRAY);
+	    specialties = new ArrayList<String>();
+	    for (int j=0; j<jsonSpecialties.length(); j++) {
+		specialties.add(jsonSpecialties.getString(j));
+	    }
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(INCLUDE_FEDERAL_JSON_ELEMENT, includeFederal);
+	    json.put(INCLUDE_STATE_JSON_ELEMENT, includeState);
+	    json.put(STATE_JSON_ELEMENT, state);
+	    json.put(FILTER_BY_INDUSTRY_JSON_ELEMENT, filterByIndustry);
+	    json.put(INDUSTRY_JSON_ELEMENT, industry);
+	    json.put(FILTER_BY_SPECIALTY_JSON_ELEMENT, filterBySpecialty);
+	    JSONArray jsonSpecialties = new JSONArray();
+	    for (String specialty : specialties) {
+		jsonSpecialties.put(specialty);
+	    }
+	    json.put(SPECIALTIES_JSON_ARRAY, jsonSpecialties);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

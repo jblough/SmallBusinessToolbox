@@ -84,14 +84,8 @@ public class AwardsSearchCriteria implements Parcelable {
 		    int length = jsonSearches.length();
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
-			boolean downloadAll = jsonSearch.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
-			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			String searchTerm = jsonSearch.getString(SEARCH_TERM_JSON_ELEMENT);
-			String agency = jsonSearch.getString(AGENCY_JSON_ELEMENT);
-			String company = jsonSearch.getString(COMPANY_JSON_ELEMENT);
-			String institution = jsonSearch.getString(INSTITUTION_JSON_ELEMENT);
-			int year = jsonSearch.optInt(YEAR_JSON_ELEMENT, 0);
-			AwardsSearchCriteria search = new AwardsSearchCriteria(downloadAll, searchTerm, agency, company, institution, year);
+			String name = json.getString(NAME_JSON_ELEMENT);
+			AwardsSearchCriteria search = new AwardsSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -109,15 +103,9 @@ public class AwardsSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, AwardsSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		AwardsSearchCriteria search = entry.getValue();
-		jsonSearch.put(DOWLOAD_ALL_JSON_ELEMENT, search.downloadAll);
-		jsonSearch.put(SEARCH_TERM_JSON_ELEMENT, search.searchTerm);
-		jsonSearch.put(AGENCY_JSON_ELEMENT, search.agency);
-		jsonSearch.put(COMPANY_JSON_ELEMENT, search.company);
-		jsonSearch.put(INSTITUTION_JSON_ELEMENT, search.institution);
-		jsonSearch.put(YEAR_JSON_ELEMENT, search.year);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -127,5 +115,39 @@ public class AwardsSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public AwardsSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public AwardsSearchCriteria(final JSONObject json) {
+	try {
+	    downloadAll = json.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
+	    searchTerm = json.getString(SEARCH_TERM_JSON_ELEMENT);
+	    agency = json.getString(AGENCY_JSON_ELEMENT);
+	    company = json.getString(COMPANY_JSON_ELEMENT);
+	    institution = json.getString(INSTITUTION_JSON_ELEMENT);
+	    year = json.optInt(YEAR_JSON_ELEMENT, 0);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(DOWLOAD_ALL_JSON_ELEMENT, downloadAll);
+	    json.put(SEARCH_TERM_JSON_ELEMENT, searchTerm);
+	    json.put(AGENCY_JSON_ELEMENT, agency);
+	    json.put(COMPANY_JSON_ELEMENT, company);
+	    json.put(INSTITUTION_JSON_ELEMENT, institution);
+	    json.put(YEAR_JSON_ELEMENT, year);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

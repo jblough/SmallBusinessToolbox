@@ -80,12 +80,7 @@ public class GenericSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			boolean downloadAll = jsonSearch.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
-			boolean onlyNew = jsonSearch.getBoolean(ONLY_NEW_JSON_ELEMENT);
-			String searchTerm = jsonSearch.getString(SEARCH_TERM_JSON_ELEMENT);
-			String agency = jsonSearch.getString(AGENCY_JSON_ELEMENT);
-			String type = jsonSearch.getString(TYPE_JSON_ELEMENT);
-			GenericSearchCriteria search = new GenericSearchCriteria(downloadAll, onlyNew, searchTerm, agency, type);
+			GenericSearchCriteria search = new GenericSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -103,14 +98,9 @@ public class GenericSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, GenericSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		GenericSearchCriteria search = entry.getValue();
-		jsonSearch.put(DOWLOAD_ALL_JSON_ELEMENT, search.downloadAll);
-		jsonSearch.put(ONLY_NEW_JSON_ELEMENT, search.onlyNew);
-		jsonSearch.put(SEARCH_TERM_JSON_ELEMENT, search.searchTerm);
-		jsonSearch.put(AGENCY_JSON_ELEMENT, search.agency);
-		jsonSearch.put(TYPE_JSON_ELEMENT, search.type);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -120,5 +110,37 @@ public class GenericSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public GenericSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public GenericSearchCriteria(final JSONObject json) {
+	try {
+	    downloadAll = json.getBoolean(DOWLOAD_ALL_JSON_ELEMENT);
+	    onlyNew = json.getBoolean(ONLY_NEW_JSON_ELEMENT);
+	    searchTerm = json.getString(SEARCH_TERM_JSON_ELEMENT);
+	    agency = json.getString(AGENCY_JSON_ELEMENT);
+	    type = json.getString(TYPE_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(DOWLOAD_ALL_JSON_ELEMENT, downloadAll);
+	    json.put(ONLY_NEW_JSON_ELEMENT, onlyNew);
+	    json.put(SEARCH_TERM_JSON_ELEMENT, searchTerm);
+	    json.put(AGENCY_JSON_ELEMENT, agency);
+	    json.put(TYPE_JSON_ELEMENT, type);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

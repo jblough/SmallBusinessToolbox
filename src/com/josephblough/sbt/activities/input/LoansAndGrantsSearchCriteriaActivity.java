@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
+import com.josephblough.sbt.activities.ShortcutActivity;
 import com.josephblough.sbt.activities.results.LoansAndGrantsSearchResultsActivity;
 import com.josephblough.sbt.criteria.LoansAndGrantsSearchCriteria;
 
@@ -64,6 +65,8 @@ public class LoansAndGrantsSearchCriteriaActivity extends Activity {
 	super.onCreate(savedInstanceState);
         setContentView(R.layout.loans_and_grants_search_criteria);
         
+        final boolean creatingLauncher = getIntent().getBooleanExtra(ShortcutActivity.CREATE_LAUNCHER_KEY, false);
+        
         federalCheckBox = (CheckBox)findViewById(R.id.loans_and_grants_include_federal_checkbox);
         stateCheckBox = (CheckBox)findViewById(R.id.loans_and_grants_state_filter_checkbox);
         stateSpinner = (Spinner)findViewById(R.id.loans_and_grants_state_spinner);
@@ -113,10 +116,24 @@ public class LoansAndGrantsSearchCriteriaActivity extends Activity {
         // Default to include federal results
         federalCheckBox.setChecked(true);
         
-        ((Button)findViewById(R.id.loans_and_grants_search_button)).setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button)findViewById(R.id.loans_and_grants_search_button);
+	if (creatingLauncher) {
+	    searchButton.setText("Create Launcher");
+	}
+	
+        searchButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
-		search();
+		if (creatingLauncher) {
+		    Intent data = new Intent();
+		    data.putExtra(ShortcutActivity.SEARCH_TYPE, ShortcutActivity.LOANS_INDEX);
+		    data.putExtra(ShortcutActivity.CRITERIA, createCriteria().toJson().toString());
+		    setResult(RESULT_OK, data);
+		    finish();
+		}
+		else {
+		    search();
+		}
 	    }
 	});
         

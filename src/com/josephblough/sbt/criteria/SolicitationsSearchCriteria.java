@@ -73,12 +73,7 @@ public class SolicitationsSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			String keyword = jsonSearch.getString(KEYWORD_JSON_ELEMENT);
-			String agency = jsonSearch.optString(AGENCY_JSON_ELEMENT);
-			if ("".equals(agency))
-			    agency = null;
-			int filter = jsonSearch.getInt(FILTER_JSON_ELEMENT);
-			SolicitationsSearchCriteria search = new SolicitationsSearchCriteria(keyword, agency, filter);
+			SolicitationsSearchCriteria search = new SolicitationsSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -96,12 +91,9 @@ public class SolicitationsSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, SolicitationsSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		SolicitationsSearchCriteria search = entry.getValue();
-		jsonSearch.put(KEYWORD_JSON_ELEMENT, search.keyword);
-		jsonSearch.put(AGENCY_JSON_ELEMENT, (search.agency == null) ? "" : search.agency);
-		jsonSearch.put(FILTER_JSON_ELEMENT, search.filter);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -111,5 +103,35 @@ public class SolicitationsSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public SolicitationsSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public SolicitationsSearchCriteria(final JSONObject json) {
+	try {
+	    keyword = json.getString(KEYWORD_JSON_ELEMENT);
+	    agency = json.optString(AGENCY_JSON_ELEMENT);
+	    if ("".equals(agency))
+		agency = null;
+	    filter = json.getInt(FILTER_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(KEYWORD_JSON_ELEMENT, keyword);
+	    json.put(AGENCY_JSON_ELEMENT, (agency == null) ? "" : agency);
+	    json.put(FILTER_JSON_ELEMENT, filter);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

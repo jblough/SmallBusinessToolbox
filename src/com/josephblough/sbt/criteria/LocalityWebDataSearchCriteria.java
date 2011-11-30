@@ -85,11 +85,7 @@ public class LocalityWebDataSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			int type = jsonSearch.getInt(TYPE_JSON_ELEMENT);
-			int scope = jsonSearch.getInt(SCOPE_JSON_ELEMENT);
-			String state = jsonSearch.getString(STATE_JSON_ELEMENT);
-			String locality = jsonSearch.getString(LOCALITY_JSON_ELEMENT);
-			LocalityWebDataSearchCriteria search = new LocalityWebDataSearchCriteria(type, scope, state, locality);
+			LocalityWebDataSearchCriteria search = new LocalityWebDataSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -107,13 +103,9 @@ public class LocalityWebDataSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, LocalityWebDataSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		LocalityWebDataSearchCriteria search = entry.getValue();
-		jsonSearch.put(TYPE_JSON_ELEMENT, search.type);
-		jsonSearch.put(SCOPE_JSON_ELEMENT, search.scope);
-		jsonSearch.put(STATE_JSON_ELEMENT, search.state);
-		jsonSearch.put(LOCALITY_JSON_ELEMENT, search.locality);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -123,5 +115,35 @@ public class LocalityWebDataSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public LocalityWebDataSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public LocalityWebDataSearchCriteria(final JSONObject json) {
+	try {
+	    type = json.getInt(TYPE_JSON_ELEMENT);
+	    scope = json.getInt(SCOPE_JSON_ELEMENT);
+	    state = json.getString(STATE_JSON_ELEMENT);
+	    locality = json.getString(LOCALITY_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(TYPE_JSON_ELEMENT, type);
+	    json.put(SCOPE_JSON_ELEMENT, scope);
+	    json.put(STATE_JSON_ELEMENT, state);
+	    json.put(LOCALITY_JSON_ELEMENT, locality);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

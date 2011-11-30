@@ -70,9 +70,7 @@ public class RecommendedSitesSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			int searchBy = jsonSearch.getInt(SEARCH_BY_JSON_ELEMENT);
-			String searchTerm = jsonSearch.getString(SEARCH_TERM_JSON_ELEMENT);
-			RecommendedSitesSearchCriteria search = new RecommendedSitesSearchCriteria(searchBy, searchTerm);
+			RecommendedSitesSearchCriteria search = new RecommendedSitesSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -90,11 +88,9 @@ public class RecommendedSitesSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, RecommendedSitesSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		RecommendedSitesSearchCriteria search = entry.getValue();
-		jsonSearch.put(SEARCH_BY_JSON_ELEMENT, search.searchBy);
-		jsonSearch.put(SEARCH_TERM_JSON_ELEMENT, search.searchTerm);
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 
 		jsonSearches.put(jsonSearch);
 	    }
@@ -104,5 +100,31 @@ public class RecommendedSitesSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public RecommendedSitesSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public RecommendedSitesSearchCriteria(final JSONObject json) {
+	try {
+	    searchBy = json.getInt(SEARCH_BY_JSON_ELEMENT);
+	    searchTerm = json.getString(SEARCH_TERM_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(SEARCH_BY_JSON_ELEMENT, searchBy);
+	    json.put(SEARCH_TERM_JSON_ELEMENT, searchTerm);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }

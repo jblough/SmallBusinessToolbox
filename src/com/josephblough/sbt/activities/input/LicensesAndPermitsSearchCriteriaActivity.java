@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
+import com.josephblough.sbt.activities.ShortcutActivity;
 import com.josephblough.sbt.activities.results.LicensesAndPermitsSearchResultsActivity;
 import com.josephblough.sbt.criteria.LicensesAndPermitsSearchCriteria;
 
@@ -64,6 +65,8 @@ public class LicensesAndPermitsSearchCriteriaActivity extends Activity implement
 	super.onCreate(savedInstanceState);
         setContentView(R.layout.licenses_and_permits_search_criteria);
         
+        final boolean creatingLauncher = getIntent().getBooleanExtra(ShortcutActivity.CREATE_LAUNCHER_KEY, false);
+        
         typeSpinner = (Spinner)findViewById(R.id.licenses_and_permits_search_by_spinner);
         byStateSpinner = (Spinner)findViewById(R.id.licenses_and_permits_state_spinner);
         byCategorySpinner = (Spinner)findViewById(R.id.licenses_and_permits_category_spinner);
@@ -106,10 +109,24 @@ public class LicensesAndPermitsSearchCriteriaActivity extends Activity implement
 	    }
 	});
         
-        ((Button)findViewById(R.id.licenses_and_permits_search_button)).setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button)findViewById(R.id.licenses_and_permits_search_button);
+	if (creatingLauncher) {
+	    searchButton.setText("Create Launcher");
+	}
+	
+        searchButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
-		search();
+		if (creatingLauncher) {
+		    Intent data = new Intent();
+		    data.putExtra(ShortcutActivity.SEARCH_TYPE, ShortcutActivity.LICENSES_INDEX);
+		    data.putExtra(ShortcutActivity.CRITERIA, createCriteria().toJson().toString());
+		    setResult(RESULT_OK, data);
+		    finish();
+		}
+		else {
+		    search();
+		}
 	    }
 	});
         

@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
+import com.josephblough.sbt.activities.ShortcutActivity;
 import com.josephblough.sbt.activities.results.LocalityWebDataResultsActivity;
 import com.josephblough.sbt.criteria.LocalityWebDataSearchCriteria;
 
@@ -55,6 +56,8 @@ public class LocalityWebDataCriteriaActivity extends Activity implements OnEdito
 	super.onCreate(savedInstanceState);
         setContentView(R.layout.locality_web_data_criteria);
         
+        final boolean creatingLauncher = getIntent().getBooleanExtra(ShortcutActivity.CREATE_LAUNCHER_KEY, false);
+        
         typeSpinner = (Spinner)findViewById(R.id.web_data_type_spinner);
         stateSpinner = (Spinner)findViewById(R.id.web_data_state_spinner);
         scopeSpinner = (Spinner)findViewById(R.id.web_data_scope_spinner);
@@ -74,10 +77,24 @@ public class LocalityWebDataCriteriaActivity extends Activity implements OnEdito
 	    }
 	});
         
-        ((Button)findViewById(R.id.web_data_search_button)).setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button)findViewById(R.id.web_data_search_button);
+	if (creatingLauncher) {
+	    searchButton.setText("Create Launcher");
+	}
+	
+        searchButton.setOnClickListener(new View.OnClickListener() {
 	    
 	    public void onClick(View v) {
-		search();
+		if (creatingLauncher) {
+		    Intent data = new Intent();
+		    data.putExtra(ShortcutActivity.SEARCH_TYPE, ShortcutActivity.URLS_INDEX);
+		    data.putExtra(ShortcutActivity.CRITERIA, createCriteria().toJson().toString());
+		    setResult(RESULT_OK, data);
+		    finish();
+		}
+		else {
+		    search();
+		}
 	    }
 	});
 

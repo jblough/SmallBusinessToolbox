@@ -95,13 +95,7 @@ public class LicensesAndPermitsSearchCriteria implements Parcelable {
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
 			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
-			int searchBy = jsonSearch.getInt(SEARCH_BY_JSON_ELEMENT);
-			String state = jsonSearch.getString(STATE_JSON_ELEMENT);
-			String category = jsonSearch.getString(CATEGORY_JSON_ELEMENT);
-			String businessType = jsonSearch.getString(BUSINESS_TYPE_JSON_ELEMENT);
-			int businessTypeSubfilter = jsonSearch.getInt(BUSINESS_TYPE_SUBFILTER_JSON_ELEMENT);
-			String businessTypeSubfilterLocality = jsonSearch.getString(BUSINESS_TYPE_SUBFILTER_LOCALITY_JSON_ELEMENT);
-			LicensesAndPermitsSearchCriteria search = new LicensesAndPermitsSearchCriteria(searchBy, state, category, businessType, businessTypeSubfilter, businessTypeSubfilterLocality);
+			LicensesAndPermitsSearchCriteria search = new LicensesAndPermitsSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
 		}
@@ -119,16 +113,9 @@ public class LicensesAndPermitsSearchCriteria implements Parcelable {
 	try {
 	    JSONArray jsonSearches = new JSONArray();
 	    for (Entry<String, LicensesAndPermitsSearchCriteria> entry : criteria.entrySet()) {
-		JSONObject jsonSearch = new JSONObject();
-		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		LicensesAndPermitsSearchCriteria search = entry.getValue();
-		jsonSearch.put(SEARCH_BY_JSON_ELEMENT, search.searchBy);
-		jsonSearch.put(STATE_JSON_ELEMENT, search.state);
-		jsonSearch.put(CATEGORY_JSON_ELEMENT, search.category);
-		jsonSearch.put(BUSINESS_TYPE_JSON_ELEMENT, search.businessType);
-		jsonSearch.put(BUSINESS_TYPE_SUBFILTER_JSON_ELEMENT, search.businessTypeSubfilter);
-		jsonSearch.put(BUSINESS_TYPE_SUBFILTER_LOCALITY_JSON_ELEMENT, search.businessTypeSubfilterLocality);
-
+		JSONObject jsonSearch = search.toJson();
+		jsonSearch.put(NAME_JSON_ELEMENT, entry.getKey());
 		jsonSearches.put(jsonSearch);
 	    }
 	    json.put(SEARCHES_JSON_ARRAY, jsonSearches);
@@ -137,5 +124,39 @@ public class LicensesAndPermitsSearchCriteria implements Parcelable {
 	    Log.e(TAG, e.getMessage(), e);
 	}
 	return json.toString();
+    }
+    
+    public LicensesAndPermitsSearchCriteria(final String jsonString) throws JSONException {
+	this(new JSONObject(jsonString));
+    }
+    
+    public LicensesAndPermitsSearchCriteria(final JSONObject json) {
+	try {
+	    searchBy = json.getInt(SEARCH_BY_JSON_ELEMENT);
+	    state = json.getString(STATE_JSON_ELEMENT);
+	    category = json.getString(CATEGORY_JSON_ELEMENT);
+	    businessType = json.getString(BUSINESS_TYPE_JSON_ELEMENT);
+	    businessTypeSubfilter = json.getInt(BUSINESS_TYPE_SUBFILTER_JSON_ELEMENT);
+	    businessTypeSubfilterLocality = json.getString(BUSINESS_TYPE_SUBFILTER_LOCALITY_JSON_ELEMENT);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+    }
+    
+    public JSONObject toJson() {
+	JSONObject json = new JSONObject();
+	try {
+	    json.put(SEARCH_BY_JSON_ELEMENT, searchBy);
+	    json.put(STATE_JSON_ELEMENT, state);
+	    json.put(CATEGORY_JSON_ELEMENT, category);
+	    json.put(BUSINESS_TYPE_JSON_ELEMENT, businessType);
+	    json.put(BUSINESS_TYPE_SUBFILTER_JSON_ELEMENT, businessTypeSubfilter);
+	    json.put(BUSINESS_TYPE_SUBFILTER_LOCALITY_JSON_ELEMENT, businessTypeSubfilterLocality);
+	}
+	catch (JSONException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	}
+	return json;
     }
 }
