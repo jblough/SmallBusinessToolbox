@@ -1,7 +1,10 @@
 package com.josephblough.sbt.activities.results;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,15 +39,27 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 
     private TextView titleLabel;
     private TextView urlLabel;
+    private TextView createDateLabel;
+    private TextView closeDateLabel;
+    private TextView daysToCloseLabel;
     
     private TableRow titleRow;
     private TableRow urlRow;
+    private TableRow createDateRow;
+    private TableRow closeDateRow;
+    private TableRow daysToCloseRow;
     
     private Button dismissDetailsButton;
     private Button visitUrlButton;
     private Button shareUrlButton;
     private View detailsView;
     private View detailsControls;
+    
+    private SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMMM dd, yyyy");
+
+    private SimpleDateFormat dateWithTimeParser = new SimpleDateFormat(" \tMMM dd, yyyy h:mm a");
+    private SimpleDateFormat dateWithTimeFormatter = new SimpleDateFormat("MMMMM dd, yyyy h:mm a");
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,9 +82,15 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 
 	titleLabel = (TextView)findViewById(R.id.green_details_title_value);
 	urlLabel = (TextView)findViewById(R.id.green_details_url_value);
+	createDateLabel = (TextView)findViewById(R.id.green_details_create_date_value);
+	closeDateLabel = (TextView)findViewById(R.id.green_details_close_date_value);
+	daysToCloseLabel = (TextView)findViewById(R.id.green_details_days_to_close_value);
 
 	titleRow = (TableRow)findViewById(R.id.green_details_title_row);
 	urlRow = (TableRow)findViewById(R.id.green_details_url_row);
+	createDateRow = (TableRow)findViewById(R.id.green_details_create_date_row);
+	closeDateRow = (TableRow)findViewById(R.id.green_details_close_date_row);
+	daysToCloseRow = (TableRow)findViewById(R.id.green_details_days_to_close_row);
 	
 	dismissDetailsButton.setOnClickListener(new View.OnClickListener() {
 	    
@@ -169,6 +190,53 @@ public class GreenSearchResultsActivity extends SearchResultsActivity implements
 	}
 	else
 	    urlRow.setVisibility(View.GONE);
+	
+	if (!isEmpty(post.createDate)) {
+	    try {
+		Date createDate = dateParser.parse(post.createDate);
+		createDateLabel.setText(dateFormatter.format(createDate));
+	    }
+	    catch (ParseException e) {
+		try {
+		    Date createDate = dateWithTimeParser.parse(post.createDate);
+		    createDateLabel.setText(dateWithTimeFormatter.format(createDate));
+		}
+		catch (ParseException e2) {
+		    closeDateLabel.setText(post.closeDate);
+		}
+	    }
+	    createDateRow.setVisibility(View.VISIBLE);
+	}
+	else
+	    createDateRow.setVisibility(View.GONE);
+	
+	// Close Date
+	if (!isEmpty(post.closeDate)) {
+	    try {
+		Date closingDate = dateParser.parse(post.closeDate);
+		closeDateLabel.setText(dateFormatter.format(closingDate));
+	    }
+	    catch (ParseException e) {
+		    try {
+			Date closingDate = dateWithTimeParser.parse(post.closeDate);
+			closeDateLabel.setText(dateWithTimeFormatter.format(closingDate));
+		    }
+		    catch (ParseException e2) {
+			closeDateLabel.setText(post.closeDate);
+		    }
+	    }
+	    closeDateRow.setVisibility(View.VISIBLE);
+	}
+	else
+	    closeDateRow.setVisibility(View.GONE);
+	
+	// Days to Close
+	if (!isEmpty(post.daysToClose)) {
+	    daysToCloseLabel.setText(post.daysToClose);
+	    daysToCloseRow.setVisibility(View.VISIBLE);
+	}
+	else
+	    daysToCloseRow.setVisibility(View.GONE);
 	
 
 	detailsView.setVisibility(View.VISIBLE);

@@ -48,6 +48,18 @@
                 />
         </TableRow>
         
+        <TableRow android:id="@+id/generic_details_create_date_row">
+            <TextView
+                android:text="Create Date:"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+            <TextView android:id="@+id/generic_details_create_date_value"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+            
         <TableRow android:id="@+id/generic_details_close_date_row">
             <TextView
                 android:text="Close Date:"

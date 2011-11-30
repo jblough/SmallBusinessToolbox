@@ -26,6 +26,7 @@ Green Types: (not sure how these map.  example is 'presolicitation')
     
     public String title;
     public String url;
+    public String createDate;
     public String closeDate;
     public String daysToClose;
     
@@ -36,6 +37,7 @@ Green Types: (not sure how these map.  example is 'presolicitation')
     public GenericPost(final JSONObject json) {
 	title = json.optString("title");
 	url = json.optString("url");
+	createDate = json.optString("create_date");
 	closeDate = json.optString("close_date");
 	daysToClose = json.optString("days_to_close");
     }
@@ -65,6 +67,8 @@ Green Types: (not sure how these map.  example is 'presolicitation')
 		json.put("title", title);
 	    if (url != null)
 		json.put("url", url);
+	    if (createDate != null)
+		json.put("create_date", createDate);
 	    if (closeDate != null)
 		json.put("close_date", closeDate);
 	    if (daysToClose != null)
@@ -81,6 +85,8 @@ Green Types: (not sure how these map.  example is 'presolicitation')
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
+	result = prime * result
+		+ ((createDate == null) ? 0 : createDate.hashCode());
 	result = prime * result
 		+ ((closeDate == null) ? 0 : closeDate.hashCode());
 	result = prime * result
@@ -99,6 +105,11 @@ Green Types: (not sure how these map.  example is 'presolicitation')
 	if (getClass() != obj.getClass())
 	    return false;
 	GenericPost other = (GenericPost) obj;
+	if (createDate == null) {
+	    if (other.createDate != null)
+		return false;
+	} else if (!createDate.equals(other.createDate))
+	    return false;
 	if (closeDate == null) {
 	    if (other.closeDate != null)
 		return false;
@@ -127,7 +138,7 @@ Green Types: (not sure how these map.  example is 'presolicitation')
     }
     
     public int getDetailCount() {
-	return 4;
+	return 5;
     }
 
     public boolean isVisible(int detail) {
@@ -140,9 +151,11 @@ Green Types: (not sure how these map.  example is 'presolicitation')
 	    return "Title:";
 	case 1: // link
 	    return "URL:";
-	case 2: // close date
+	case 2: // create date
+	    return "Create Date:";
+	case 3: // close date
 	    return "Close Date:";
-	case 3: // days to close
+	case 4: // days to close
 	    return "Days to Close:";
 	};
 	return "";
@@ -154,22 +167,53 @@ Green Types: (not sure how these map.  example is 'presolicitation')
 	    return title;
 	case 1: // link
 	    return url;
-	case 2: // close date
+	case 2: // create date
+	    if (isEmpty(createDate)) {
+		return createDate;
+	    }
+	    else {
+		try {
+		    SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+		    SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMMM dd, yyyy");
+		    Date createdDate = dateParser.parse(createDate);
+		    return dateFormatter.format(createdDate);
+		}
+		catch (ParseException e) {
+		    try {
+			SimpleDateFormat dateWithTimeParser = new SimpleDateFormat(" \tMMM dd, yyyy h:mm a");
+			SimpleDateFormat dateWithTimeFormatter = new SimpleDateFormat("MMMMM dd, yyyy h:mm a");
+			Date createdDate = dateWithTimeParser.parse(createDate);
+			return dateWithTimeFormatter.format(createdDate);
+		    }
+		    catch (ParseException e2) {
+			return createDate;
+		    }
+		}
+	    }
+	case 3: // close date
 	    if (isEmpty(closeDate)) {
 		return closeDate;
 	    }
 	    else {
 		try {
-		    SimpleDateFormat closeDateParser = new SimpleDateFormat("yyyy-MM-dd");
-		    SimpleDateFormat closeDateFormatter = new SimpleDateFormat("MMMMM dd, yyyy");
-		    Date closingDate = closeDateParser.parse(closeDate);
-		    return closeDateFormatter.format(closingDate);
+		    SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+		    SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMMM dd, yyyy");
+		    Date closingDate = dateParser.parse(closeDate);
+		    return dateFormatter.format(closingDate);
 		}
 		catch (ParseException e) {
-		    return closeDate;
+			try {
+			    SimpleDateFormat dateWithTimeParser = new SimpleDateFormat(" \tMMM dd, yyyy h:mm a");
+			    SimpleDateFormat dateWithTimeFormatter = new SimpleDateFormat("MMMMM dd, yyyy h:mm a");
+			    Date closingDate = dateWithTimeParser.parse(closeDate);
+			    return dateWithTimeFormatter.format(closingDate);
+			}
+			catch (ParseException e2) {
+			    return closeDate;
+			}
 		}
 	    }
-	case 3: // days to close
+	case 4: // days to close
 	    return null; // Don't return this since it may change since it was bookmarked
 	};
 	return null;
