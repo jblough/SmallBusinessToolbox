@@ -84,7 +84,7 @@ public class AwardsSearchCriteria implements Parcelable {
 		    int length = jsonSearches.length();
 		    for (int i=0; i<length; i++) {
 			JSONObject jsonSearch = jsonSearches.getJSONObject(i);
-			String name = json.getString(NAME_JSON_ELEMENT);
+			String name = jsonSearch.getString(NAME_JSON_ELEMENT);
 			AwardsSearchCriteria search = new AwardsSearchCriteria(jsonSearch);
 			searches.put(name, search);
 		    }
