@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.LicenseAndPermitDataAdapter;
 import com.josephblough.sbt.callbacks.LicensesAndPermitsRetrieverCallback;
@@ -159,8 +160,10 @@ public class LicensesAndPermitsSearchResultsActivity extends SearchResultsActivi
 	
 	if (everything.size() == 0)
 	    Toast.makeText(this, R.string.no_data_returned, Toast.LENGTH_LONG).show();
-	else
-	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
+	else {
+	    if (((ApplicationController)getApplicationContext()).shouldShowTooltip(R.string.filter_results_tooltip))
+		Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
+	}
     }
 /*
     public void success(LicenseAndPermitDataCollection results) {

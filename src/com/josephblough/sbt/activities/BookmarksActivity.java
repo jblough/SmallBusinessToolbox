@@ -294,7 +294,8 @@ public class BookmarksActivity extends ListActivity implements OnItemClickListen
 	bookmark.removeFromBookmarks(app);
 	app.saveBookmarks();
 
-	Toast.makeText(this, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
+	if (app.shouldShowTooltip(R.string.unbookmarked))
+	    Toast.makeText(this, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
 	
 	// Refresh the adapter
 	updateAdapter();

@@ -19,6 +19,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.josephblough.sbt.ApplicationController;
 import com.josephblough.sbt.R;
 import com.josephblough.sbt.adapters.RecommendedSitesDataAdapter;
 import com.josephblough.sbt.callbacks.RecommendedSitesRetrieverCallback;
@@ -150,8 +151,10 @@ public class RecommendedSitesSearchResultsActivity extends SearchResultsActivity
 	
 	if (this.data == null || this.data.size() == 0)
 	    Toast.makeText(this, R.string.no_data_returned, Toast.LENGTH_LONG).show();
-	else
-	    Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
+	else {
+	    if (((ApplicationController)getApplicationContext()).shouldShowTooltip(R.string.filter_results_tooltip))
+		Toast.makeText(this, R.string.filter_results_tooltip, Toast.LENGTH_LONG).show();
+	}
     }
 
     public void error(String error) {

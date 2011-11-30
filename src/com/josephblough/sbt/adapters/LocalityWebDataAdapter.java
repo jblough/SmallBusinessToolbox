@@ -63,12 +63,14 @@ public class LocalityWebDataAdapter extends ArrayAdapter<LocalityWebData> {
 		if (app.bookmarks.isBookmarked(webData)) {
 		    app.bookmarks.removeBookmark(webData);
 		    ((ImageView)v).setImageResource(R.drawable.unbookmarked);
-		    Toast.makeText(context, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
+		    if (app.shouldShowTooltip(R.string.unbookmarked))
+			Toast.makeText(context, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
 		}
 		else {
 		    app.bookmarks.addBookmark(webData);
 		    ((ImageView)v).setImageResource(R.drawable.bookmarked);
-		    Toast.makeText(context, R.string.bookmarked, Toast.LENGTH_SHORT).show();
+		    if (app.shouldShowTooltip(R.string.bookmarked))
+			Toast.makeText(context, R.string.bookmarked, Toast.LENGTH_SHORT).show();
 		}
 		app.saveBookmarks();
 	    }

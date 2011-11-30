@@ -9,6 +9,7 @@ import com.josephblough.sbt.tasks.BookmarkLoaderTask;
 import com.josephblough.sbt.tasks.BookmarkSaverTask;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Location;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 public class ApplicationController extends Application {
 
     private final static String TAG = "ApplicationController";
+    private final static int MAX_TIMES_TOOLTIP_SHOWN = 5; // Assume that after seeing a tooltip 5 times, the user doesn't need to see it again
 
     public final Map<String, String> stateLookupMap = new HashMap<String, String>();
     public final Map<String, String> agencyLookupMap = new HashMap<String, String>();
@@ -294,5 +296,24 @@ public class ApplicationController extends Application {
 	
 	//bookmarks.saveBookmarks(this);
 	new BookmarkSaverTask(this).execute(bookmarks);
+    }
+    
+    public boolean shouldShowTooltip(final int tooltip) {
+	return shouldShowTooltip(Integer.toString(tooltip));
+    }
+    
+    public boolean shouldShowTooltip(final String tooltip) {
+	SharedPreferences prefs = getSharedPreferences(TAG, 0);
+	int timesSeen = prefs.getInt(tooltip, 0);
+	if (timesSeen < MAX_TIMES_TOOLTIP_SHOWN) {
+	    timesSeen++;
+	    SharedPreferences.Editor editor = prefs.edit();
+	    editor.putInt(tooltip, timesSeen);
+	    editor.commit();
+	    return true;
+	}
+	else {
+	    return false;
+	}
     }
 }

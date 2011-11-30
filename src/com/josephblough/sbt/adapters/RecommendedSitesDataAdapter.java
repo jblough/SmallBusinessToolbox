@@ -63,12 +63,14 @@ public class RecommendedSitesDataAdapter extends ArrayAdapter<RecommendedSite> {
 		if (app.bookmarks.isBookmarked(site)) {
 		    app.bookmarks.removeBookmark(site);
 		    ((ImageView)v).setImageResource(R.drawable.unbookmarked);
-		    Toast.makeText(context, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
+		    if (app.shouldShowTooltip(R.string.unbookmarked))
+			Toast.makeText(context, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
 		}
 		else {
 		    app.bookmarks.addBookmark(site);
 		    ((ImageView)v).setImageResource(R.drawable.bookmarked);
-		    Toast.makeText(context, R.string.bookmarked, Toast.LENGTH_SHORT).show();
+		    if (app.shouldShowTooltip(R.string.bookmarked))
+			Toast.makeText(context, R.string.bookmarked, Toast.LENGTH_SHORT).show();
 		}
 		app.saveBookmarks();
 	    }

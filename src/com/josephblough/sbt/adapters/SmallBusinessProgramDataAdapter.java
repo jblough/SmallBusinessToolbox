@@ -63,11 +63,13 @@ public class SmallBusinessProgramDataAdapter extends ArrayAdapter<SmallBusinessP
 		if (app.bookmarks.isBookmarked(program)) {
 		    app.bookmarks.removeBookmark(program);
 		    ((ImageView)v).setImageResource(R.drawable.unbookmarked);
-		    Toast.makeText(context, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
+		    if (app.shouldShowTooltip(R.string.unbookmarked))
+			Toast.makeText(context, R.string.unbookmarked, Toast.LENGTH_SHORT).show();
 		}
 		else {
 		    app.bookmarks.addBookmark(program);
 		    ((ImageView)v).setImageResource(R.drawable.bookmarked);
+		    if (app.shouldShowTooltip(R.string.bookmarked))
 		    Toast.makeText(context, R.string.bookmarked, Toast.LENGTH_SHORT).show();
 		}
 		app.saveBookmarks();
