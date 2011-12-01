@@ -32,14 +32,19 @@ import com.josephblough.sbt.criteria.RecommendedSitesSearchCriteria;
 import com.josephblough.sbt.criteria.SolicitationsSearchCriteria;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ShortcutActivity extends ListActivity implements OnItemClickListener {
@@ -61,11 +66,11 @@ public class ShortcutActivity extends ListActivity implements OnItemClickListene
     public static final int GREEN_INDEX = 8;
     public static final int GENERIC_INDEX = 9;
     
-    private static final int[] icons = {R.drawable.bookmark, R.drawable.license, R.drawable.contract, 
+    private static final int[] ICONS = {R.drawable.bookmark, R.drawable.license, R.drawable.contract, 
 	R.drawable.recommended_sites, R.drawable.webdata, R.drawable.document_wrench, 
 	R.drawable.solicitations, R.drawable.award, R.drawable.green_search, R.drawable.generic_search};
     
-    private static final String[] items = {"Bookmarks", "Licenses and Permits",
+    private static final String[] ITEMS = {"Bookmarks", "Licenses and Permits",
 	"Loans and Grants",
 	"Recommended Sites",
 	"City/County Websites",
@@ -85,7 +90,8 @@ public class ShortcutActivity extends ListActivity implements OnItemClickListene
 
         if (Intent.ACTION_CREATE_SHORTCUT.equals(action)) {
             // Create a shortcut
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+            ShortcutAdapter adapter = new ShortcutAdapter(this, R.layout.shortcut_type_row, ITEMS);
             setListAdapter(adapter);
 
             getListView().setOnItemClickListener(this);
@@ -204,8 +210,8 @@ public class ShortcutActivity extends ListActivity implements OnItemClickListene
         // Set up the container intent (the response to the caller)
         Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, items[searchType]);
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, icons[searchType]);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, ITEMS[searchType]);
+        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, ICONS[searchType]);
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Return the result to the launcher
@@ -286,5 +292,26 @@ public class ShortcutActivity extends ListActivity implements OnItemClickListene
 	    break;
 	}
 	finish(); // Don't let the user back up to this screen once the spelling test has started
+    }
+
+    private class ShortcutAdapter extends ArrayAdapter<String> {
+
+	public ShortcutAdapter(Context context, int textViewResourceId, String[] objects) {
+	    super(context, textViewResourceId, objects);
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+	    View row = convertView;
+
+	    if (row == null) {
+		LayoutInflater inflater = (LayoutInflater)ShortcutActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		row = inflater.inflate(R.layout.shortcut_type_row, null);
+	    }
+
+	    ((ImageView)row.findViewById(R.id.shortcut_row_image)).setImageResource(ICONS[position]);
+	    ((TextView)row.findViewById(R.id.shortcut_row_title)).setText(ITEMS[position]);
+	    return row;
+	}
     }
 }
