@@ -120,7 +120,7 @@ public class RecommendedSitesSearchCriteriaActivity extends Activity implements 
 		searchTermField.setVisibility(View.VISIBLE);
 		break;
 	    case RecommendedSitesSearchCriteria.DOMAIN_FILTER_INDEX:
-		searchTermLabel.setText("Domain (e.g., sba.gov)");
+		searchTermLabel.setText("Domain");
 		categorySpinner.setVisibility(View.GONE);
 		searchTermField.setVisibility(View.VISIBLE);
 		break;
