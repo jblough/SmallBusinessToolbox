@@ -99,68 +99,73 @@ public class SbaTransport {
 	LicenseAndPermitDataCollection data = new LicenseAndPermitDataCollection();
 
 	// Categories
-	int index = 0;
-	JSONArray category = json.optJSONArray("category_site_item" + index++);
-	while (category != null) {
-	    try {
-		data.addCategory(new LicenseAndPermitData(category));
+	JSONArray categories = json.optJSONArray("sites_for_category");
+	if (categories != null) {
+	    int count = categories.length();
+	    for (int i=0; i<count; i++) {
+		try {
+		    data.addCategory(new LicenseAndPermitData(categories.getJSONObject(i)));
+		}
+		catch (JSONException e) {
+		    Log.e(TAG, e.getMessage(), e);
+		}
 	    }
-	    catch (JSONException e) {
-		Log.e(TAG, e.getMessage(), e);
-	    }
-	    category = json.optJSONArray("category_site_item" + index++);
 	}
 
 	// States
-	index = 0;
-	JSONArray state = json.optJSONArray("state_site_item" + index++);
-	while (state != null) {
-	    try {
-		data.addState(new LicenseAndPermitData(state));
+	JSONArray states = json.optJSONArray("state_sites");
+	if (states != null) {
+	    int count = states.length();
+	    for (int i=0; i<count; i++) {
+		try {
+		    data.addState(new LicenseAndPermitData(states.getJSONObject(i)));
+		}
+		catch (JSONException e) {
+		    Log.e(TAG, e.getMessage(), e);
+		}
 	    }
-	    catch (JSONException e) {
-		Log.e(TAG, e.getMessage(), e);
-	    }
-	    state = json.optJSONArray("state_site_item" + index++);
 	}
 
 	// Counties
-	index = 0;
-	JSONArray county = json.optJSONArray("county_sites_item" + index++);
-	while (county != null) {
-	    try {
-		data.addCounty(new LicenseAndPermitData(county));
+	JSONArray counties = json.optJSONArray("county_sites");
+	if (counties != null) {
+	    int count = counties.length();
+	    for (int i=0; i<count; i++) {
+		try {
+		    data.addCounty(new LicenseAndPermitData(counties.getJSONObject(i)));
+		}
+		catch (JSONException e) {
+		    Log.e(TAG, e.getMessage(), e);
+		}
 	    }
-	    catch (JSONException e) {
-		Log.e(TAG, e.getMessage(), e);
-	    }
-	    county = json.optJSONArray("county_sites_item" + index++);
 	}
 
 	// Locality
-	index = 0;
-	JSONArray locality = json.optJSONArray("local_site_item" + index++);
-	while (locality != null) {
-	    try {
-		data.addLocality(new LicenseAndPermitData(locality));
+	JSONArray localities = json.optJSONArray("local_sites");
+	if (localities != null) {
+	    int count = localities.length();
+	    for (int i=0; i<count; i++) {
+		try {
+		    data.addLocality(new LicenseAndPermitData(localities.getJSONObject(i)));
+		}
+		catch (JSONException e) {
+		    Log.e(TAG, e.getMessage(), e);
+		}
 	    }
-	    catch (JSONException e) {
-		Log.e(TAG, e.getMessage(), e);
-	    }
-	    locality = json.optJSONArray("local_site_item" + index++);
-	}
+	}	
 
 	// Business types
-	index = 0;
-	JSONArray businessType = json.optJSONArray("business_type_site_item" + index++);
-	while (businessType != null) {
-	    try {
-		data.addBusinessType(new LicenseAndPermitData(businessType));
+	JSONArray businessTypes = json.optJSONArray("sites_for_business_type");
+	if (businessTypes != null) {
+	    int count = businessTypes.length();
+	    for (int i=0; i<count; i++) {
+		try {
+		    data.addBusinessType(new LicenseAndPermitData(businessTypes.getJSONObject(i)));
+		}
+		catch (JSONException e) {
+		    Log.e(TAG, e.getMessage(), e);
+		}
 	    }
-	    catch (JSONException e) {
-		Log.e(TAG, e.getMessage(), e);
-	    }
-	    businessType = json.optJSONArray("business_type_site_item" + index++);
 	}
 
 	return data;
@@ -343,9 +348,9 @@ public class SbaTransport {
 	    ResponseHandler<String> handler = new BasicResponseHandler();
 	    String response = client.execute(httpMethod, handler);
 
-	    JSONObject json = new JSONObject(response);
+	    JSONArray array = new JSONArray(response);
 	    
-	    return processRecommendedSites(json);
+	    return processRecommendedSites(array);
 	}
 	catch (OutOfMemoryError e) {
 	    return null;
@@ -356,15 +361,15 @@ public class SbaTransport {
 	return null;
     }
 
-    private static List<RecommendedSite> processRecommendedSites(final JSONObject json) throws JSONException {
+    private static List<RecommendedSite> processRecommendedSites(final JSONArray array) throws JSONException {
 	List<RecommendedSite> data = new ArrayList<RecommendedSite>();
 
-	int index = 0;
-	JSONArray site = json.optJSONArray("recommended_sites_item" + index++);
-	while (site != null) {
-	    data.add(new RecommendedSite(site));
-	    site = json.optJSONArray("recommended_sites_item" + index++);
+	int length = array.length();
+	for (int i=0; i<length; i++) {
+	    JSONObject json = array.getJSONObject(i);
+	    data.add(new RecommendedSite(json));
 	}
+	
 
 	return data;
     }

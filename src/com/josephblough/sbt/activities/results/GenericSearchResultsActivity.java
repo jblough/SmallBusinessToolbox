@@ -59,6 +59,8 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
     private SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMMM dd, yyyy");
 
+    private SimpleDateFormat date2Parser = new SimpleDateFormat("MMM dd, yyyy");
+    
     private SimpleDateFormat dateWithTimeParser = new SimpleDateFormat(" \tMMM dd, yyyy h:mm a");
     private SimpleDateFormat dateWithTimeFormatter = new SimpleDateFormat("MMMMM dd, yyyy h:mm a");
     
@@ -196,19 +198,7 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
 	
 	// Create Date
 	if (!isEmpty(post.createDate)) {
-	    try {
-		Date createDate = dateParser.parse(post.createDate);
-		createDateLabel.setText(dateFormatter.format(createDate));
-	    }
-	    catch (ParseException e) {
-		try {
-		    Date createDate = dateWithTimeParser.parse(post.createDate);
-		    createDateLabel.setText(dateWithTimeFormatter.format(createDate));
-		}
-		catch (ParseException e2) {
-		    closeDateLabel.setText(post.closeDate);
-		}
-	    }
+	    createDateLabel.setText(convertDateToString(post.createDate));
 	    createDateRow.setVisibility(View.VISIBLE);
 	}
 	else
@@ -216,19 +206,7 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
 	
 	// Close Date
 	if (!isEmpty(post.closeDate)) {
-	    try {
-		Date closingDate = dateParser.parse(post.closeDate);
-		closeDateLabel.setText(dateFormatter.format(closingDate));
-	    }
-	    catch (ParseException e) {
-		    try {
-			Date closingDate = dateWithTimeParser.parse(post.closeDate);
-			closeDateLabel.setText(dateWithTimeFormatter.format(closingDate));
-		    }
-		    catch (ParseException e2) {
-			closeDateLabel.setText(post.closeDate);
-		    }
-	    }
+	    closeDateLabel.setText(convertDateToString(post.closeDate));
 	    closeDateRow.setVisibility(View.VISIBLE);
 	}
 	else
@@ -289,5 +267,33 @@ public class GenericSearchResultsActivity extends SearchResultsActivity implemen
     protected void hideDetailsView() {
 	detailsView.setVisibility(View.GONE);
 	detailsControls.setVisibility(View.GONE);
+    }
+
+    private String convertDateToString(final String dateString) {
+	final String trimmedDateString = dateString.trim();
+	
+	try {
+	    Date date = dateParser.parse(trimmedDateString);
+	    return dateFormatter.format(date);
+	}
+	catch (ParseException e) {
+	}
+	
+	try {
+	    Date date = date2Parser.parse(trimmedDateString);
+	    return dateFormatter.format(date);
+	}
+	catch (ParseException e) {
+	}
+	
+	try {
+	    Date date = dateWithTimeParser.parse(trimmedDateString);
+	    return dateWithTimeFormatter.format(date);
+	}
+	catch (ParseException e) {
+	}
+	
+	// Fall back to the original date string
+	return trimmedDateString;
     }
 }

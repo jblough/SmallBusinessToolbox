@@ -33,6 +33,9 @@ public class LicenseAndPermitData implements Bookmarkable {
 		if ("title".equals(name)) {
 		    title = json.getString("title");
 		}
+		if ("link_title".equals(name)) {
+		    title = json.getString("link_title");
+		}
 		else if ("description".equals(name)) {
 		    description = json.getString("description");
 		}
@@ -62,7 +65,7 @@ public class LicenseAndPermitData implements Bookmarkable {
     }
     
     public LicenseAndPermitData(final JSONObject json) throws JSONException {
-	title = json.optString("title");
+	title = json.optString("link_title");
 	description = json.optString("description");
 	url = json.optString("url");
 	state = json.optString("state");
@@ -112,7 +115,7 @@ public class LicenseAndPermitData implements Bookmarkable {
 	JSONObject json = new JSONObject();
 	try {
 	    if (title != null)
-		json.put("title", title);
+		json.put("link_title", title);
 	    if (description != null)
 		json.put("description", description);
 	    if (url != null)

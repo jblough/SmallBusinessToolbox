@@ -16,6 +16,7 @@ public class GenericPostsXmlHandler extends DefaultHandler {
     private static final String ITEM_TAG = "item";
     private static final String TITLE_TAG = "title";
     private static final String URL_TAG = "url";
+    private static final String CREATE_DATE_TAG = "create_date";
     private static final String CLOSE_DATE_TAG = "close_date";
     private static final String DAYS_TO_CLOSE_TAG = "days_to_close";
     
@@ -25,9 +26,10 @@ public class GenericPostsXmlHandler extends DefaultHandler {
     private static final int ITEM_ID = 2;
     private static final int TITLE_ID = 3;
     private static final int URL_ID = 4;
-    private static final int CLOSE_DATE_ID = 5;
-    private static final int DAYS_TO_CLOSE_ID = 6;
-    private static final int UNKNOWN_ID = 7;
+    private static final int CREATE_DATE_ID = 5;
+    private static final int CLOSE_DATE_ID = 6;
+    private static final int DAYS_TO_CLOSE_ID = 7;
+    private static final int UNKNOWN_ID = 8;
     
     private Stack<Integer> tagStack;
     public ArrayList<GenericPost> posts;
@@ -54,6 +56,8 @@ public class GenericPostsXmlHandler extends DefaultHandler {
 	    tagStack.push(TITLE_ID);
 	else if (URL_TAG.equals(localName))
 	    tagStack.push(URL_ID);
+	else if (CREATE_DATE_TAG.equals(localName))
+	    tagStack.push(CREATE_DATE_ID);
 	else if (CLOSE_DATE_TAG.equals(localName))
 	    tagStack.push(CLOSE_DATE_ID);
 	else if (DAYS_TO_CLOSE_TAG.equals(localName))
@@ -77,6 +81,8 @@ public class GenericPostsXmlHandler extends DefaultHandler {
 	    post.title = characterBuffer.toString();
 	else if (URL_TAG.equals(localName))
 	    post.url = characterBuffer.toString();
+	else if (CREATE_DATE_TAG.equals(localName))
+	    post.createDate = characterBuffer.toString();
 	else if (CLOSE_DATE_TAG.equals(localName))
 	    post.closeDate = characterBuffer.toString();
 	else if (DAYS_TO_CLOSE_TAG.equals(localName))
@@ -90,6 +96,7 @@ public class GenericPostsXmlHandler extends DefaultHandler {
 	switch (tagStack.peek()) {
 	case TITLE_ID:
 	case URL_ID:
+	case CREATE_DATE_ID:
 	case CLOSE_DATE_ID:
 	case DAYS_TO_CLOSE_ID:
 	    characterBuffer.append(xmlDecode(new String(ch, start, length)));
